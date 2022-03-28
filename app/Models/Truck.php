@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer $id
- * @property string $nomor_polisi
- * @property int $tahun_pembuatan
- * @property string $berat_kosong
- * @property string $jenis
+ * @property string $plate_number
+ * @property int $year_made
+ * @property string $weight_empty
+ * @property string $type
  * @property integer $id_vendor
  * @property integer $id_driver
  */

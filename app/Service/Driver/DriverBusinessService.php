@@ -57,6 +57,27 @@ class DriverBusinessService extends Singleton
     }
 
     /**
+     * Find driver by search key
+     *
+     * @param string $searchQuery
+     * @return array|null
+     */
+    public function Find(string $searchQuery): ?array
+    {
+        $drivers = $this->driver_repository->Find($searchQuery);
+        if ($drivers->empty()) {
+            return null;
+        }
+
+        return $drivers->transform(function ($driver) {
+            return [
+                'id'    => $driver->id,
+                'text'  => $driver->name
+            ];
+        })->toArray();
+    }
+
+    /**
      * Register new driver
      *
      * @param string $name

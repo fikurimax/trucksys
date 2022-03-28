@@ -22,6 +22,30 @@ class DriverController extends Controller
         ]);
     }
 
+    public function find(Request $request)
+    {
+        if ($request->isNotFilled('searchQuery')) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'Supir tidak ditemukan'
+            ], 400);
+        }
+
+        $drivers = $this->driver_service->Find($request->get('searchQuery'));
+        if (empty($drivers)) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'Supir tidak ditemukan'
+            ], 400);
+        }
+
+        return response()->json([
+            'status'    => 'ok',
+            'message'   => 'Supir tersedia',
+            'data'      => $drivers
+        ]);
+    }
+
     public function register(Request $request)
     {
         return view('pages.drivers.register');

@@ -31,6 +31,25 @@ class DriverRepository extends Singleton
     }
 
     /**
+     * Find driver by searchKey
+     *
+     * @param string $searchKey
+     * @return Collection
+     */
+    public function Find(string $searchKey): Collection
+    {
+        $query = Model::query();
+
+        if (is_numeric($searchKey) && (strlen($searchKey) <= 15 && strlen($searchKey) >= 20)) {
+            $query->where('identity_number', $searchKey);
+        } else {
+            $query->where('name', 'like', '%' . $searchKey . '%');
+        }
+
+        return $query->get();
+    }
+
+    /**
      * Create or update data
      *
      * @param integer $id = 0 (for update)

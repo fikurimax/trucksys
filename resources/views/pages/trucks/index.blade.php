@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Vendor') }}
+            {{ __('Truk') . " " .$vendor['name'] }}
         </h2>
     </x-slot>
 
@@ -13,8 +13,8 @@
                         <a 
                             type="button" 
                             class="float-right py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                            href="{{ route('vendor.register') }}">
-                            Daftarkan Vendor Baru
+                            href="{{ route('vendor.truck.register', ['vid' => request()->vid]) }}">
+                            Daftarkan Truk Baru
                         </a>
                     </div>
                     <div class="clear-both relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -22,19 +22,19 @@
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
-                                        {{ __('Nama') }}
+                                        {{ __('Nomor Polisi') }}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        {{ __('Alamat') }}
+                                        {{ __('Tahun Pembuatan') }}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        {{ __('Kontak') }}
+                                        {{ __('Berat Kosong') }}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        {{ __('NPWP') }}
+                                        {{ __('Tipe') }}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        {{ __('Jumlah Truk') }}
+                                        {{ __('Supir') }}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         <span class="sr-only">Edit</span>
@@ -42,35 +42,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (count($vendors) > 0)
-                                    @foreach ($vendors as $vendor)
+                                @if (count($trucks) > 0)
+                                    @foreach ($trucks as $truck)
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                                {{ $vendor['name'] }}
+                                                {{ $truck['plate_number'] }}
                                             </th>
                                             <td class="px-6 py-4">
-                                                {{ $vendor['address'] }}
+                                                {{ $truck['year_made'] }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ $vendor['contact'] }}
+                                                {{ $truck['weight_empty'] }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ $vendor['tin'] }}
+                                                {{ $truck['type'] }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ $vendor['truck_counts'] }}
+                                                <a href="#">{{ $truck['driver_name'] }}</a>
                                             </td>
                                             <td class="px-6 py-4 text-right">
                                                 <div class="inline-flex rounded-md shadow-sm" role="group">
-                                                    <a href="{{ route('vendor.truck.index', ['vid' => $vendor['id']]) }}" type="button" class="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                        Truk
-                                                    </a>
-                                                    <a href="{{ route('vendor.update', ['id' => $vendor['id']]) }}" 
+                                                    <a href="{{ route('vendor.truck.update', ['vid' => request()->vid, 'id' => $truck['id']]) }}" 
                                                         type="button" 
                                                         class="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                                                         Edit
                                                     </a>
-                                                    <form action="{{ route('vendor.delete', ['id' => $vendor['id']]) }}" method="POST">
+                                                    <form action="{{ route('vendor.truck.delete', ['vid' => request()->vid, 'id' => $truck['id']]) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button

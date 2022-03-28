@@ -33,11 +33,11 @@ class VendorRepository extends Singleton
     /**
      * Create or update data
      *
-     * @param integer $id = 0 (for update)
+     * @param integer $id = 0 (for create new)
      * @param string $name
      * @param string $address
      * @param string $contact
-     * @param integer $tin
+     * @param string $tin
      * @return boolean
      */
     public function Save(
@@ -45,7 +45,7 @@ class VendorRepository extends Singleton
         string $name,
         string $address,
         string $contact,
-        int $tin
+        string $tin
     ): bool {
         try {
             if ($id == 0) {

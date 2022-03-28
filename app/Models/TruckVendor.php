@@ -70,7 +70,7 @@ class TruckVendor extends Model
         return $this->attributes['npwp'];
     }
 
-    public function setTinAttribute(int $tin = 0)
+    public function setTinAttribute(string $tin = '')
     {
         $this->attributes['npwp'] = $tin;
     }

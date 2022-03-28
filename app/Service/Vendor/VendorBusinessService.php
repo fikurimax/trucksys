@@ -60,14 +60,14 @@ class VendorBusinessService extends Singleton
      * @param string $name
      * @param string $address
      * @param string $contact
-     * @param integer $tin
+     * @param string $tin
      * @return bool
      */
     public function Register(
         string $name,
         string $address,
         string $contact,
-        int $tin
+        string $tin
     ): bool {
         // Save data
         // 0 for register a new one
@@ -87,7 +87,7 @@ class VendorBusinessService extends Singleton
      * @param string $name
      * @param string $address
      * @param string $contact
-     * @param integer $tin
+     * @param string $tin
      * @return boolean
      */
     public function Update(
@@ -95,7 +95,7 @@ class VendorBusinessService extends Singleton
         string $name,
         string $address,
         string $contact,
-        int $tin
+        string $tin
     ): bool {
         // Save data
         $ok = $this->vendor_repository->Save($id, $name, $address, $contact, $tin);

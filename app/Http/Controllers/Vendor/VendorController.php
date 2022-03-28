@@ -43,7 +43,7 @@ class VendorController extends Controller
             'name'      => 'required|string',
             'address'   => 'required',
             'contact'   => 'required|numeric|digits_between:11,15',
-            'tin'       => 'required|numeric|digits:20'
+            'tin'       => 'required|min:15|max:20'
         ], [
             'name.required'     => 'Silakan isi kolom Nama',
             'address.required'  => 'Silakan isi kolom Alamat',
@@ -51,7 +51,8 @@ class VendorController extends Controller
             'tin.required'      => 'Silakan isi kolom NPWP',
             'numeric'           => 'Silakan isi data dengan benar',
             'contact.digits_between' => 'Digit nomor handphone antara 11 - 15',
-            'tin.digits'        => 'Digit NPWP adalah 20 digit'
+            'tin.min'           => 'Minimum jumlah digit NPWP adalah 15',
+            'tin.min'           => 'Maximum jumlah digit NPWP adalah 20'
         ]);
 
         if ($request->filled('id')) {
@@ -61,7 +62,7 @@ class VendorController extends Controller
                 $request->post('name'),
                 $request->post('address'),
                 $request->post('contact'),
-                (int) $request->post('tin')
+                $request->post('tin')
             );
         } else {
             // Register driver
@@ -69,7 +70,7 @@ class VendorController extends Controller
                 $request->post('name'),
                 $request->post('address'),
                 $request->post('contact'),
-                (int) $request->post('tin')
+                $request->post('tin')
             );
         }
 
