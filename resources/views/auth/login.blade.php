@@ -19,14 +19,14 @@
             <div>
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input id="email" class="email block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
 
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />
 
-                <x-input id="password" class="block mt-1 w-full"
+                <x-input id="password" class="password block mt-1 w-full"
                                 type="password"
                                 name="password"
                                 required autocomplete="current-password" />
@@ -47,9 +47,13 @@
                     </a>
                 @endif
 
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
+                <x-button class="login_btn ml-3">Login</x-button>
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
+                    {{ __('Belum Punya akun') }}
+                </a>
             </div>
         </form>
     </x-auth-card>

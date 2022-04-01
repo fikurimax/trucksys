@@ -3,22 +3,36 @@
 namespace App\Http\Controllers\Driver;
 
 use App\Http\Controllers\Controller;
+use App\Models\Driver;
 use App\Service\Driver\DriverBusinessService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class DriverController extends Controller
 {
-    private DriverBusinessService $driver_service;
-
-    public function __construct()
-    {
-        $this->driver_service = DriverBusinessService::getInstance();
-    }
-
     public function index(Request $request)
     {
         return view('pages.drivers.index', [
-            'drivers'   => $this->driver_service->Get()
+            'drivers' => Driver::get()
+        ]);
+    }
+
+    public function detail(Request $request)
+    {
+        if ($request->isNotFilled('id')) {
+            return back();
+        }
+
+        $driver = Driver::find($request->get('id'));
+        if ($driver == null) {
+            return back();
+        }
+
+        return view('pages.drivers.detail', [
+            'driver' => $driver
         ]);
     }
 
@@ -48,7 +62,9 @@ class DriverController extends Controller
 
     public function register(Request $request)
     {
-        return view('pages.drivers.register');
+        return view('pages.drivers.register', [
+            'last_id' => Driver::latest()->first()->id ?? 0
+        ]);
     }
 
     public function update(Request $request)
@@ -57,7 +73,7 @@ class DriverController extends Controller
             return redirect()->route('driver.index');
         }
 
-        $driver = $this->driver_service->GetDetail((int) $request->get('id'));
+        $driver = Driver::find((int) $request->get('id'));
         if ($driver == null) {
             return redirect()->route('driver.index');
         }
@@ -71,46 +87,120 @@ class DriverController extends Controller
     {
         $this->validate($request, [
             'id'                    => 'numeric',
-            'name'                  => 'required|string',
-            'address'               => 'required',
-            'contact'               => 'required|numeric',
-            'identity_number'       => 'required|numeric',
-            'driver_license_number' => 'required|numeric'
+            'nomor_registrasi'      => 'required|numeric',
+            'nama'                  => 'required|string',
+            'alamat'                => 'required',
+            'tanggal_lahir'         => 'required',
+            'tempat_lahir'          => 'required',
+            'no_ktp'                => 'required|numeric',
+            'no_sim'                => 'required|numeric'
         ], [
-            'name.required'                     => 'Silakan isi kolom Nama',
-            'address.required'                  => 'Silakan isi kolom Alamat',
-            'contact.required'                  => 'Silakan isi kolom Kontak',
-            'identity_number.required'          => 'Silakan isi kolom No. KTP',
-            'driver_license_number.required'    => 'Silakan isi kolom No. SIM',
-            'numeric'                           => 'Silakan isi data dengan benar'
+            'nomor_registrasi.required' => 'Silakan isi kolom Nomor Registrasi',
+            'nama.required'             => 'Silakan isi kolom Nama',
+            'alamat.required'           => 'Silakan isi kolom Alamat',
+            'tanggal_lahir.required'    => 'Silakan isi kolom Tanggal Lahir',
+            'tempat_lahir.required'     => 'Silakan isi kolom Tempat Lahir',
+            'no_ktp.required'           => 'Silakan isi kolom No. KTP',
+            'no_sim.required'           => 'Silakan isi kolom No. SIM',
+            'numeric'                   => 'Silakan isi data dengan benar'
+        ]);
+
+        $request->merge([
+            'tanggal_lahir' => Carbon::parse(str_replace('/', '-', $request->post('tanggal_lahir')))->format('Y-m-d'),
+            'masa_berlaku_sim' => Carbon::parse(str_replace('/', '-', $request->post('masa_berlaku_sim')))->format('Y-m-d')
+        ]);
+
+        $profile_picture_name = uniqid() . "." . $request->file('profile')->getClientOriginalExtension();
+        $idcard_picture = uniqid() . "." . $request->file('driver_picture_id_card')->getClientOriginalExtension();
+        $driver_license_picture_name = uniqid() . "." . $request->file('driver_license_picture')->getClientOriginalExtension();
+        $request->request->add([
+            'photo' => $profile_picture_name,
+            'photo_ktp' => $idcard_picture,
+            'photo_sim' => $driver_license_picture_name
         ]);
 
         if ($request->filled('id')) {
             // Update driver
-            $success = $this->driver_service->Update(
-                $request->post('id'),
-                $request->post('name'),
-                $request->post('address'),
-                $request->post('contact'),
-                $request->post('identity_number'),
-                $request->post('driver_license_number')
-            );
+            DB::beginTransaction();
+            try {
+                if ($request->has('profile')) {
+                    $request->file('profile')->storeAs('public/drivers', $profile_picture_name);
+                }
+                if ($request->has('driver_picture_id_card')) {
+                    $request->file('driver_picture_id_card')->storeAs('public/drivers/idcard', $idcard_picture);
+                }
+                if ($request->has('driver_license_picture')) {
+                    $request->file('driver_license_picture')->storeAs('public/drivers/driver_licenses', $driver_license_picture_name);
+                }
+
+                Driver::find($request->post('id'))
+                    ->update($request->except([
+                        '_token', 'profile', 'driver_picture_id_card', 'driver_license_picture'
+                    ]));
+
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+
+                if (Storage::exists('public/drivers/' . $profile_picture_name)) {
+                    Storage::delete('public/drivers/' . $profile_picture_name);
+                }
+
+                if (Storage::exists('public/drivers/idcard/' . $idcard_picture)) {
+                    Storage::delete('public/drivers/idcard/' . $idcard_picture);
+                }
+
+                if (Storage::exists('public/drivers/driver_licenses/' . $driver_license_picture_name)) {
+                    Storage::delete('public/drivers/driver_licenses/' . $driver_license_picture_name);
+                }
+
+                Log::critical($th->getMessage());
+                Log::critical($th->getTraceAsString());
+
+                return back()
+                    ->withInput()
+                    ->withErrors('Terjadi gangguan pada server');
+            }
+
+            return redirect()->route('driver.detail', ['id' => $request->post('id')]);
         } else {
             // Register driver
-            $success = $this->driver_service->Register(
-                $request->post('name'),
-                $request->post('address'),
-                $request->post('contact'),
-                $request->post('identity_number'),
-                $request->post('driver_license_number')
-            );
-        }
+            DB::beginTransaction();
+            try {
+                $request->file('profile')->storeAs('public/drivers', $profile_picture_name);
+                $request->file('driver_picture_id_card')->storeAs('public/drivers/idcard', $idcard_picture);
+                $request->file('driver_license_picture')->storeAs('public/drivers/driver_licenses', $driver_license_picture_name);
 
-        if (!$success) {
-            return back()->withErrors('Terjadi gangguan pada server');
-        }
+                Driver::create($request->except([
+                    '_token', 'profile', 'driver_picture_id_card', 'driver_license_picture'
+                ]));
 
-        return redirect()->route('driver.index');
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+
+                if (Storage::exists('public/drivers/' . $profile_picture_name)) {
+                    Storage::delete('public/drivers/' . $profile_picture_name);
+                }
+
+                if (Storage::exists('public/drivers/idcard/' . $idcard_picture)) {
+                    Storage::delete('public/drivers/idcard/' . $idcard_picture);
+                }
+
+                if (Storage::exists('public/drivers/driver_licenses/' . $driver_license_picture_name)) {
+                    Storage::delete('public/drivers/driver_licenses/' . $driver_license_picture_name);
+                }
+
+                Log::critical($th->getMessage());
+                Log::critical($th->getTraceAsString());
+
+                return back()
+                    ->withInput()
+                    ->withErrors('Terjadi gangguan pada server');
+            }
+
+            return redirect()->route('driver.index');
+        }
     }
 
     public function delete(Request $request)
@@ -119,9 +209,9 @@ class DriverController extends Controller
             return redirect()->route('driver.index');
         }
 
-        $ok = $this->driver_service->Delete($request->get('id'));
+        $ok = Driver::find($request->get('id'))->delete();
         if (!$ok) {
-            return back()->withErrors('Terjadi gangguan pada server');
+            return redirect()->route('driver.detail', ['id' => $request->get('id')])->withErrors(['Terjadi gangguan pada server']);
         }
 
         return redirect()->route('driver.index');

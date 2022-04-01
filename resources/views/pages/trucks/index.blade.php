@@ -1,97 +1,101 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Truk') . " " .$vendor['name'] }}
-        </h2>
-    </x-slot>
+@extends('adminlte::page')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <div class="w-full">
-                        <a 
-                            type="button" 
-                            class="float-right py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                            href="{{ route('vendor.truck.register', ['vid' => request()->vid]) }}">
-                            Daftarkan Truk Baru
-                        </a>
-                    </div>
-                    <div class="clear-both relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ __('Nomor Polisi') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ __('Tahun Pembuatan') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ __('Berat Kosong') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ __('Tipe') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ __('Supir') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        <span class="sr-only">Edit</span>
-                                    </th>
+@section('content_header')
+<h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    {{ __('Truk ' . $vendor->nama_perusahaan) }}
+</h2>
+@endsection
+
+@section('content')
+<div class="card">
+    <div class="card-header">
+        <div class="card-tools">
+            <a href="{{ route('vendor.index') }}" class="btn btn-danger" role="button">
+                Kembali
+            </a>
+            <a href="{{ route('vehicle.register', ['vid' => $vendor->id]) }}" class="btn btn-primary" role="button">
+                Daftarkan Truk baru
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="datatable" 
+                        class="table table-bordered table-hover dataTable dtr-inline" 
+                        role="grid" >
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dashboard-rows" rowspan="1"
+                                    colspan="1" aria-sort="ascending">#</th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    No. Polisi
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    Merek
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    Tahun
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    STNK
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    KIR
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    Foto Unit
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for ($i = 0; $i < count($vehicles); $i++)
+                                <tr class="{{ $i % 2 == 0 ? 'even' : 'odd' }}">
+                                    <td class="dtr-control sorting_1" tabindex="0">{{ $i+1 }}</td>
+                                    <td>{{ $vehicles[$i]->nomor_polisi }}</td>
+                                    <td>{{ $vehicles[$i]->merk }}</td>
+                                    <td>{{ $vehicles[$i]->tahun_pembuatan }}</td>
+                                    <td>{{ $vehicles[$i]->nomor_stnk }}</td>
+                                    <td>{{ $vehicles[$i]->nomor_kir }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ asset('storage/trucks/' . $vehicles[$i]->photos[0]->filename) }}" data-lightbox="{{ $vehicles[$i]->photos[0]->filename }}" data-title="Foto Kendaraan">
+                                            <img src="{{ asset('storage/trucks/'.$vehicles[$i]->photos[0]->filename) }}" 
+                                                alt="Foto unit" 
+                                                style="border-radius: 4px;"
+                                                width="120">
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{ route('vehicle.detail', ['id' => $vehicles[$i]->id, 'vid' => $vendor->id]) }}" class="btn btn-success" role="button">Detail</a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @if (count($trucks) > 0)
-                                    @foreach ($trucks as $truck)
-                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                                {{ $truck['plate_number'] }}
-                                            </th>
-                                            <td class="px-6 py-4">
-                                                {{ $truck['year_made'] }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ $truck['weight_empty'] }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ $truck['type'] }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <a href="#">{{ $truck['driver_name'] }}</a>
-                                            </td>
-                                            <td class="px-6 py-4 text-right">
-                                                <div class="inline-flex rounded-md shadow-sm" role="group">
-                                                    <a href="{{ route('vendor.truck.update', ['vid' => request()->vid, 'id' => $truck['id']]) }}" 
-                                                        type="button" 
-                                                        class="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                        Edit
-                                                    </a>
-                                                    <form action="{{ route('vendor.truck.delete', ['vid' => request()->vid, 'id' => $truck['id']]) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button
-                                                            type="submit" 
-                                                            class="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-red-700 focus:text-red-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-red-500 dark:focus:text-white">
-                                                            Hapus
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="7" class="text-center">
-                                            Tidak ada vendor
-                                        </td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
+                            @endfor
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+
+</div>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/lightbox.min.css') }}">
+@endsection
+
+@section('plugins.Datatables', true)
+
+@section('js')
+<script src="{{ asset('js/lightbox.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable();
+    });
+
+</script>
+@endsection

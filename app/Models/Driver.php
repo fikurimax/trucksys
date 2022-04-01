@@ -6,88 +6,38 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property integer $id
- * @property string $name
- * @property string $address
- * @property integer $identity_number
- * @property integer $driver_license_number
- * @property string $contact
+ * @property int $id
+ * @property string $nomor_registrasi
+ * @property string $nama
+ * @property string $alamat
+ * @property string $tanggal_lahir
+ * @property string $tempat_lahir  
+ * @property string $no_ktp  
+ * @property string $no_sim  
+ * @property string $masa_berlaku_sim  
+ * @property string $handphone  
+ * @property string $photo  
+ * @property string $photo_ktp  
+ * @property string $photo_sim  
  */
 class Driver extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'nama', 'alamat', 'no_ktp', 'no_sim', 'handphone'
+        'nomor_registrasi',
+        'nama',
+        'alamat',
+        'tanggal_lahir',
+        'tempat_lahir',
+        'no_ktp',
+        'no_sim',
+        'masa_berlaku_sim',
+        'handphone',
+        'photo',
+        'photo_ktp',
+        'photo_sim',
     ];
-
-    /**
-     * Create table data proxy for translating columns name
-     * if the column's name is not English. Also this is required
-     * to avoid direct contact with the database property which is quite
-     * risky due to changes, so services can use this proxy instead
-     * of property itself
-     *
-     * @var array
-     */
-    protected $appends = [
-        'name', 'address', 'identity_number', 'driver_license_number', 'contact'
-    ];
-
-    public function getIdAttribute()
-    {
-        return $this->attributes['id'];
-    }
-
-    public function getNameAttribute()
-    {
-        return $this->attributes['nama'];
-    }
-
-    public function setNameAttribute(string $name)
-    {
-        $this->attributes['nama'] = $name;
-    }
-
-    public function getAddressAttribute()
-    {
-        return $this->attributes['alamat'];
-    }
-
-    public function setAddressAttribute(string $address)
-    {
-        $this->attributes['alamat'] = $address;
-    }
-
-    public function getContactAttribute()
-    {
-        return $this->attributes['handphone'];
-    }
-
-    public function setContactAttribute(string $contact)
-    {
-        $this->attributes['handphone'] = $contact;
-    }
-
-    public function getIdentityNumberAttribute()
-    {
-        return $this->attributes['no_ktp'];
-    }
-
-    public function setIdentityNumberAttribute(string $identity_number)
-    {
-        $this->attributes['no_ktp'] = $identity_number;
-    }
-
-    public function getDriverLicenseNumberAttribute()
-    {
-        return $this->attributes['no_sim'];
-    }
-
-    public function setDriverLicenseNumberAttribute(string $driver_license_attribute)
-    {
-        $this->attributes['no_sim'] = $driver_license_attribute;
-    }
 
     // Relations
     public function truck()

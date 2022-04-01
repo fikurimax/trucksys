@@ -6,88 +6,78 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property integer $id
- * @property string $plate_number
- * @property int $year_made
- * @property string $weight_empty
- * @property string $type
- * @property integer $id_vendor
- * @property integer $id_driver
+ * @property string $nomor_pmku
+ * @property string $nomor_npwp
+ * @property string $nomor_polisi
+ * @property string $merk
+ * @property string $model
+ * @property string $tipe_kendaraan
+ * @property string $jenis_kendaraan
+ * @property string $isi_silinder
+ * @property string $kapasitas
+ * @property int $tahun_pembuatan
+ * @property string $nomor_rangka
+ * @property string $nomor_mesin
+ * @property string $warna_tnkb
+ * @property string $bahan_bakar
+ * @property int $tahun_registrasi
+ * @property string $nama_pemilik
+ * @property string $alamat_pemilik
+ * @property string $nomor_stnk
+ * @property string $masa_berlaku_pajak_kendaraan
+ * @property string $kode_lokasi_pada_stnk
+ * @property string $masa_berlaku_stnk
+ * @property string $kepala_kir
+ * @property string $nomor_kir
+ * @property string $masa_berlaku_kir
+ * @property string $id_vendor
+ * @property string $id_driver
  */
 class Truck extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nomor_polisi', 'tahun_pembuatan', 'berat_kosong', 'jenis', 'id_vendor',
-        'id_driver'
+        'nomor_pmku',
+        'nomor_npwp',
+        'nomor_polisi',
+        'merk',
+        'model',
+        'tipe_kendaraan',
+        'jenis_kendaraan',
+        'isi_silinder',
+        'kapasitas',
+        'tahun_pembuatan',
+        'nomor_rangka',
+        'nomor_mesin',
+        'warna_tnkb',
+        'bahan_bakar',
+        'tahun_registrasi',
+        'nama_pemilik',
+        'alamat_pemilik',
+        'nomor_stnk',
+        'masa_berlaku_pajak_kendaraan',
+        'kode_lokasi_pada_stnk',
+        'masa_berlaku_stnk',
+        'kepala_kir',
+        'nomor_kir',
+        'masa_berlaku_kir',
+        'id_vendor',
+        'id_driver',
     ];
-
-    /**
-     * Create table data proxy for translating columns name
-     * if the column's name is not English. Also this is required
-     * to avoid direct contact with the database property which is quite
-     * risky due to changes, so services can use this proxy instead
-     * of property itself
-     *
-     * @var array
-     */
-    protected $appends = [
-        'plate_number', 'year_made', 'weight_empty', 'type'
-    ];
-
-    public function getIdAttribute()
-    {
-        return $this->attributes['id'];
-    }
-
-    public function getPlateNumberAttribute()
-    {
-        return $this->attributes['nomor_polisi'];
-    }
-
-    public function setPlateNumberAttribute(string $plateNumber)
-    {
-        $this->attributes['nomor_polisi'] = $plateNumber;
-    }
-
-    public function getYearMadeAttribute()
-    {
-        return $this->attributes['tahun_pembuatan'];
-    }
-
-    public function setYearMadeAttribute(int $year = 0)
-    {
-        $this->attributes['tahun_pembuatan'] = $year;
-    }
-
-    public function getWeightEmptyAttribute()
-    {
-        return $this->attributes['berat_kosong'];
-    }
-
-    public function setWeightEmptyAttribute(int $weight = 0)
-    {
-        $this->attributes['berat_kosong'] = $weight;
-    }
-
-    public function getTypeAttribute()
-    {
-        return $this->attributes['jenis'];
-    }
-
-    public function setTypeAttribute(string $type = 'unknown')
-    {
-        $this->attributes['jenis'] = $type;
-    }
 
     // Relations
     public function vendor()
     {
-        return $this->belongsTo(TruckVendor::class, 'id_vendor');
+        return $this->belongsTo(Vendor::class, 'id_vendor');
     }
 
     public function driver()
     {
         return $this->belongsTo(Supir::class, 'id_driver');
+    }
+
+    public function photos()
+    {
+        return $this->hasMany(TruckPhotos::class, 'id_truck');
     }
 }

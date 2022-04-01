@@ -15,11 +15,17 @@ class CreateDriversTable extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nomor_registrasi');
             $table->string('nama', 50);
             $table->string('alamat', 100);
+            $table->date('tanggal_lahir');
+            $table->string('tempat_lahir');
             $table->string('no_ktp', 20);
             $table->string('no_sim', 20);
-            $table->string('handphone', 15);
+            $table->date('masa_berlaku_sim');
+            $table->string('photo');
+            $table->string('photo_ktp');
+            $table->string('photo_sim');
             $table->timestamps();
         });
     }

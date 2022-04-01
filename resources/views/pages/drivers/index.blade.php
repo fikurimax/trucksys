@@ -1,99 +1,78 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Supir') }}
-        </h2>
-    </x-slot>
+@extends('adminlte::page')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <div class="w-full">
-                        <a 
-                            type="button" 
-                            class="float-right py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                            href="{{ route('driver.register') }}">
-                            Daftarkan Supir Baru
-                        </a>
-                    </div>
-                    <div class="clear-both relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ __('Nama') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ __('Alamat') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ __('Kontak') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ __('No. KTP') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ __('No. SIM') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ __('Truk') }}
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        <span class="sr-only">Edit</span>
-                                    </th>
+@section('content_header')
+<h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    {{ __('Pengemudi') }}
+</h2>
+@endsection
+
+@section('content')
+<div class="card">
+    <div class="card-body">
+        <div class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="driver-table" 
+                        class="table table-bordered table-hover dataTable dtr-inline" 
+                        role="grid" >
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dashboard-rows" rowspan="1"
+                                    colspan="1" aria-sort="ascending">
+                                    No. Reg
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    Nama Lengkap
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    ID Driver
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    Tgl. Lahir
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    No. SIM
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    Masa Berlaku SIM
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for ($i = 0; $i < count($drivers); $i++)
+                                <tr class="{{ $i % 2 == 0 ? 'even' : 'odd' }}">
+                                    <td class="dtr-control sorting_1" tabindex="0">{{$drivers[$i]->nomor_registrasi}}</td>
+                                    <td>{{ $drivers[$i]->nama }}</td>
+                                    <td>{{ $drivers[$i]->id }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($drivers[$i]->tanggal_lahir)) }}</td>
+                                    <td>{{ $drivers[$i]->no_sim }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($drivers[$i]->masa_berlaku_sim)) }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('driver.detail', ['id' => $drivers[$i]->id ]) }}" class="btn btn-success" role="button">Detail</a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @if (count($drivers) > 0)
-                                    @foreach ($drivers as $driver)
-                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                                {{ $driver['name'] }}
-                                            </th>
-                                            <td class="px-6 py-4">
-                                                {{ $driver['address'] }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ $driver['contact'] }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ $driver['identity_number'] }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ $driver['driver_license_number'] }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ ($driver['truck'] != null) ? $driver['truck'] : 'Belum ada truk' }}
-                                            </td>
-                                            <td class="px-6 py-4 text-right">
-                                                <a href="{{ route('driver.update', ['id' => $driver['id']]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                                    Edit
-                                                </a>
-                                                <form action="{{ route('driver.delete', ['id' => $driver['id']]) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button 
-                                                        class="font-medium text-red-600 dark:text-red-500 hover:underline"
-                                                        type="submit">
-                                                        Hapus
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="7" class="text-center">
-                                            Tidak ada supir
-                                        </td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
+                            @endfor
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+
+</div>
+@endsection
+
+@section('plugins.Datatables', true)
+@section('js')
+<script>
+    $(document).ready(function () {
+        $('#driver-table').DataTable({
+            processing: true
+        });
+    });
+
+</script>
+@endsection
