@@ -25,4 +25,18 @@ class Vendor extends Model
     {
         return $this->hasMany(Truck::class, 'id_vendor');
     }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        parent::booted();
+
+        static::deleting(function ($vendor) {
+            $vendor->vendor()->delete();
+        });
+    }
 }

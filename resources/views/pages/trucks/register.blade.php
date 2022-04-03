@@ -79,10 +79,17 @@
                     <div class="form-group">
                         <label for="vehicle_year_made">Tahun Pembuatan*</label>
                         <select class="form-control" name="tahun_pembuatan"
-                            value="{{ (isset($vehicle)) ? $vehicle['tahun_pembuatan'] : old('tahun_pembuatan', '') }}"
                             id="vehicle_year_made">
                             @for ($i = date('Y'); $i >= 2000; $i--)
-                            <option value="{{ $i }}">{{ $i }}</option>
+                            @if (isset($vehicle) || old('tahun_pembuatan') != '')
+                                @if ($vehicle['tahun_pembuatan'] == $i || old('tahun_pembuatan') == $i)
+                                    <option value="{{ $i }}" selected>{{ $i }}</option>
+                                @else
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endif
+                            @else
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endif
                             @endfor
                         </select>
                     </div>
@@ -116,7 +123,15 @@
                             value="{{ (isset($vehicle)) ? $vehicle['tahun_registrasi'] : old('tahun_registrasi', '') }}"
                             id="vehicle_registered">
                             @for ($i = date('Y'); $i >= 2000; $i--)
-                            <option value="{{ $i }}">{{ $i }}</option>
+                            @if (isset($vehicle) || old('tahun_registrasi') != '')
+                                @if ($vehicle['tahun_registrasi'] == $i || old('tahun_registrasi') == $i)
+                                    <option value="{{ $i }}" selected>{{ $i }}</option>
+                                @else
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endif
+                            @else
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endif
                             @endfor
                         </select>
                     </div>

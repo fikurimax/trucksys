@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property string $nomor_pmku
@@ -79,5 +80,23 @@ class Truck extends Model
     public function photos()
     {
         return $this->hasMany(TruckPhotos::class, 'id_truck');
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        parent::booted();
+
+        static::deleting(function ($truck) {
+            foreach ($$truck->photos() as $photo) {
+                Storage::delete('trucks' . DIRECTORY_SEPARATOR . $photo->filename);
+            }
+
+            $truck->photos()->delete();
+        });
     }
 }

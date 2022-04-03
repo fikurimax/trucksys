@@ -29,7 +29,7 @@ class CreateTrucksTable extends Migration
             $table->string('nomor_mesin');
             $table->string('warna_tnkb');
             $table->string('bahan_bakar');
-            $table->string('tahun_registrasi');
+            $table->mediumInteger('tahun_registrasi');
             $table->string('nama_pemilik');
             $table->string('alamat_pemilik');
             $table->string('nomor_stnk');
