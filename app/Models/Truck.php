@@ -92,7 +92,7 @@ class Truck extends Model
         parent::booted();
 
         static::deleting(function ($truck) {
-            foreach ($$truck->photos() as $photo) {
+            foreach ($truck->photos() as $photo) {
                 Storage::delete('trucks' . DIRECTORY_SEPARATOR . $photo->filename);
             }
 

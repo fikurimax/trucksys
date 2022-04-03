@@ -62,35 +62,35 @@
                 <div class="form-group">
                     <label for="vehicle_pmku">Nomor PMKU*</label>
                     <input type="string" class="form-control" name="nomor_pmku" value="{{ $vehicle->nomor_pmku }}"
-                        id="vehicle_pmku" placeholder="C01234" disabled>
+                        id="vehicle_pmku" placeholder="C01234" disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_npwp">Nomor NPWP*</label>
                     <input type="string" class="form-control" name="nomor_npwp" value="{{ $vehicle->nomor_npwp }}"
-                        id="vehicle_npwp" placeholder="12345-678.90" disabled>
+                        id="vehicle_npwp" placeholder="12345-678.90" disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_plate_number">Nomor Polisi*</label>
                     <input type="string" class="form-control" name="nomor_polisi" value="{{ $vehicle->nomor_polisi }}"
-                        id="vehicle_plate_number" placeholder="B 4212 TWM" disabled>
+                        id="vehicle_plate_number" placeholder="B 4212 TWM" disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_owner_name">Nama Pemilik*</label>
                     <input type="string" class="form-control" name="nama_pemilik" value="{{ $vehicle->nama_pemilik }}"
-                        id="vehicle_owner_name" placeholder="Nama Pemilik" disabled>
+                        id="vehicle_owner_name" placeholder="Nama Pemilik" disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_vehicle_address">Alamat Pemilik*</label>
                     <input type="string" class="form-control" name="alamat_pemilik"
                         value="{{ $vehicle->alamat_pemilik }}" id="vehicle_vehicle_address" placeholder="Alamat Pemilik"
-                        disabled>
+                        disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_kir_ttl">Masa Berlaku KIR*</label>
                     <div class="input-group date" id="vehicle_kir_ttl" data-target-input="nearest">
                         <input type="text" name="masa_berlaku_kir" value="{{ $vehicle->masa_berlaku_kir }}"
                             class="form-control datetimepicker-input" data-target="#vehicle_kir_ttl"
-                            placeholder="Masa Berlaku KIR" disabled>
+                            placeholder="Masa Berlaku KIR" disabled readonly>
                         <div class="input-group-append" data-target="#vehicle_kir_ttl" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -99,18 +99,18 @@
                 <div class="form-group">
                     <label for="vehicle_number_of_kir">Nomor KIR*</label>
                     <input type="string" class="form-control" name="nomor_kir" value="{{ $vehicle->nomor_kir }}"
-                        id="vehicle_number_of_kir" placeholder="K81957192" disabled>
+                        id="vehicle_number_of_kir" placeholder="K81957192" disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_head_of_kir">Kepala KIR*</label>
                     <input type="string" class="form-control" name="kepala_kir" value="{{ $vehicle->kepala_kir }}"
-                        id="vehicle_head_of_kir" placeholder="Nama Kepala KIR" disabled>
+                        id="vehicle_head_of_kir" placeholder="Nama Kepala KIR" disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_license_location_code">Kode Lokasi Pada STNK*</label>
                     <input type="string" class="form-control" name="kode_lokasi_pada_stnk"
                         value="{{ $vehicle->kode_lokasi_pada_stnk }}" id="vehicle_license_location_code"
-                        placeholder="Kode Lokasi Pada STNK" disabled>
+                        placeholder="Kode Lokasi Pada STNK" disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_tax_ttl">Masa Berlaku Pajak Kendaraan*</label>
@@ -118,7 +118,7 @@
                         <input type="text" name="masa_berlaku_pajak_kendaraan"
                             value="{{ $vehicle->masa_berlaku_pajak_kendaraan }}"
                             class="form-control datetimepicker-input" data-target="#vehicle_tax_ttl"
-                            placeholder="Masa Berlaku Pajak Kendaraan" disabled>
+                            placeholder="Masa Berlaku Pajak Kendaraan" disabled readonly>
                         <div class="input-group-append" data-target="#vehicle_tax_ttl" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -127,71 +127,67 @@
                 <div class="form-group">
                     <label for="vehicle_structure_number">Nomor Rangka*</label>
                     <input type="string" class="form-control" name="nomor_rangka" value="{{ $vehicle->nomor_rangka }}"
-                        id="vehicle_structure_number" placeholder="AB33432FSKJ9" disabled>
+                        id="vehicle_structure_number" placeholder="AB33432FSKJ9" disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_machine_number">Nomor Mesin*</label>
                     <input type="string" class="form-control" name="nomor_mesin" value="{{ $vehicle->nomor_mesin }}"
-                        id="vehicle_machine_number" placeholder="AB33432FSKJ9" disabled>
+                        id="vehicle_machine_number" placeholder="AB33432FSKJ9" disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_tnkb_color">Warna TNKB*</label>
                     <input type="string" class="form-control" name="warna_tnkb" value="{{ $vehicle->warna_tnkb }}"
-                        id="vehicle_tnkb_color" placeholder="PUTIH" disabled>
+                        id="vehicle_tnkb_color" placeholder="PUTIH" disabled readonly>
                 </div>
             </div>
             <div class="col-sm-12 col-md-6">
                 <div class="form-group">
                     <label for="vehicle_brand">Merk*</label>
-                    <input type="string" class="form-control" name="merk" value="{{ $vehicle->merk }}" disabled
+                    <input type="string" class="form-control" name="merk" value="{{ $vehicle->merk }}" disabled readonly
                         id="vehicle_brand" placeholder="HINO">
                 </div>
                 <div class="form-group">
                     <label for="vehicle_model">Model*</label>
-                    <input type="string" class="form-control" name="model" value="{{ $vehicle->model }}" disabled
+                    <input type="string" class="form-control" name="model" value="{{ $vehicle->model }}" disabled readonly
                         id="vehicle_model" placeholder="Truk">
                 </div>
                 <div class="form-group">
                     <label for="vehicle_type">Tipe Kendaraan*</label>
                     <input type="string" class="form-control" name="tipe_kendaraan"
-                        value="{{ $vehicle->tipe_kendaraan }}" disabled id="vehicle_type" placeholder="ST150">
+                        value="{{ $vehicle->tipe_kendaraan }}" disabled readonly id="vehicle_type" placeholder="ST150">
                 </div>
                 <div class="form-group">
                     <label for="vehicle_kind">Jenis Kendaraan*</label>
                     <input type="string" class="form-control" name="jenis_kendaraan"
-                        value="{{ $vehicle->jenis_kendaraan }}" disabled id="vehicle_kind" placeholder="ST150">
+                        value="{{ $vehicle->jenis_kendaraan }}" disabled readonly id="vehicle_kind" placeholder="ST150">
                 </div>
                 <div class="form-group">
                     <label for="vehicle_cylinder">Isi Silinder*</label>
                     <input type="string" class="form-control" name="isi_silinder" value="{{ $vehicle->isi_silinder }}"
-                        disabled id="vehicle_cylinder" placeholder="1493">
+                        disabled readonly id="vehicle_cylinder" placeholder="1493">
                 </div>
                 <div class="form-group">
                     <label for="vehicle_capacity">Kapasitas*</label>
                     <input type="string" class="form-control" name="kapasitas" value="{{ $vehicle->kapasitas }}"
-                        disabled id="vehicle_capacity" placeholder="7500">
+                        disabled readonly id="vehicle_capacity" placeholder="7500">
                 </div>
                 <div class="form-group">
                     <label for="vehicle_year_made">Tahun Pembuatan*</label>
-                    <select class="form-control" name="tahun_pembuatan" value="{{ $vehicle->tahun_pembuatan }}" disabled
+                    <select class="form-control" name="tahun_pembuatan" disabled readonly
                         id="vehicle_year_made">
-                        @for ($i = date('Y'); $i >= 2000; $i--)
-                        <option value="{{ $i }}">{{ $i }}</option>
-                        @endfor
+                        <option value="{{ $vehicle->tahun_pembuatan }}" selected>{{ $vehicle->tahun_pembuatan }}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_fuel_type">Bahan Bakar*</label>
                     <input type="string" class="form-control" name="bahan_bakar" value="{{ $vehicle->bahan_bakar }}"
-                        disabled id="vehicle_fuel_type" placeholder="BENSIN">
+                        disabled readonly id="vehicle_fuel_type" placeholder="BENSIN">
                 </div>
                 <div class="form-group">
                     <label for="vehicle_registered">Tahun Registrasi*</label>
-                    <select class="form-control" name="tahun_registrasi" value="{{ $vehicle->tahun_registrasi }}"
-                        disabled id="vehicle_registered">
-                        @for ($i = date('Y'); $i >= 2000; $i--)
-                        <option value="{{ $i }}">{{ $i }}</option>
-                        @endfor
+                    <select class="form-control" name="tahun_registrasi"
+                        disabled readonly id="vehicle_registered">
+                        <option value="{{ $vehicle->tahun_registrasi }}">{{ $vehicle->tahun_registrasi }}</option>
                     </select>
                 </div>
             </div>
