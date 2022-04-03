@@ -36,7 +36,7 @@ class Vendor extends Model
         parent::booted();
 
         static::deleting(function ($vendor) {
-            $vendor->vendor()->delete();
+            $vendor->trucks()->delete();
         });
     }
 }
