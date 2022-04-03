@@ -234,7 +234,7 @@
         });
 
         $('#submit-btn').on('click', function (e) {
-            if (document.body.contains(document.getElementById('driver-id'))) {
+            if (!document.body.contains(document.getElementById('driver-id'))) {
                 let profileState = $('#mediaFile').val();
                 if (profileState == '') {
                     alert('Silakan uppload foto diri anda');
