@@ -110,27 +110,40 @@ class DriverController extends Controller
             'masa_berlaku_sim' => Carbon::parse(str_replace('/', '-', $request->post('masa_berlaku_sim')))->format('Y-m-d')
         ]);
 
-        $profile_picture_name = uniqid() . "." . $request->file('profile')->getClientOriginalExtension();
-        $idcard_picture = uniqid() . "." . $request->file('driver_picture_id_card')->getClientOriginalExtension();
-        $driver_license_picture_name = uniqid() . "." . $request->file('driver_license_picture')->getClientOriginalExtension();
-        $request->request->add([
-            'photo' => $profile_picture_name,
-            'photo_ktp' => $idcard_picture,
-            'photo_sim' => $driver_license_picture_name
-        ]);
+        if ($request->has('profile')) {
+            $profile_picture_name = uniqid() . "." . $request->file('profile')->getClientOriginalExtension();
+            $request->request->add([
+                'photo' => $profile_picture_name,
+            ]);
+        }
+        if ($request->has('driver_picture_id_card')) {
+            $idcard_picture = uniqid() . "." . $request->file('driver_picture_id_card')->getClientOriginalExtension();
+            $request->request->add([
+                'photo_ktp' => $idcard_picture,
+            ]);
+        }
+        if ($request->has('driver_license_picture')) {
+            $driver_license_picture_name = uniqid() . "." . $request->file('driver_license_picture')->getClientOriginalExtension();
+            $request->request->add([
+                'photo_sim' => $driver_license_picture_name
+            ]);
+        }
 
         if ($request->filled('id')) {
             // Update driver
             DB::beginTransaction();
             try {
+                $driver = Driver::find($request->post('id'));
+                Storage::delete('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . $driver);
+
                 if ($request->has('profile')) {
-                    $request->file('profile')->storeAs('public/drivers', $profile_picture_name);
+                    $request->file('profile')->storeAs('public' . DIRECTORY_SEPARATOR . 'drivers', $profile_picture_name);
                 }
                 if ($request->has('driver_picture_id_card')) {
-                    $request->file('driver_picture_id_card')->storeAs('public/drivers/idcard', $idcard_picture);
+                    $request->file('driver_picture_id_card')->storeAs('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'idcard', $idcard_picture);
                 }
                 if ($request->has('driver_license_picture')) {
-                    $request->file('driver_license_picture')->storeAs('public/drivers/driver_licenses', $driver_license_picture_name);
+                    $request->file('driver_license_picture')->storeAs('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'driver_licenses', $driver_license_picture_name);
                 }
 
                 Driver::find($request->post('id'))
@@ -142,16 +155,16 @@ class DriverController extends Controller
             } catch (\Throwable $th) {
                 DB::rollBack();
 
-                if (Storage::exists('public/drivers/' . $profile_picture_name)) {
-                    Storage::delete('public/drivers/' . $profile_picture_name);
+                if (Storage::exists('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . $profile_picture_name)) {
+                    Storage::delete('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . $profile_picture_name);
                 }
 
-                if (Storage::exists('public/drivers/idcard/' . $idcard_picture)) {
-                    Storage::delete('public/drivers/idcard/' . $idcard_picture);
+                if (Storage::exists('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'idcard' . DIRECTORY_SEPARATOR . $idcard_picture)) {
+                    Storage::delete('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'idcard' . DIRECTORY_SEPARATOR . $idcard_picture);
                 }
 
-                if (Storage::exists('public/drivers/driver_licenses/' . $driver_license_picture_name)) {
-                    Storage::delete('public/drivers/driver_licenses/' . $driver_license_picture_name);
+                if (Storage::exists('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'driver_licenses' . DIRECTORY_SEPARATOR . $driver_license_picture_name)) {
+                    Storage::delete('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'driver_licenses' . DIRECTORY_SEPARATOR . $driver_license_picture_name);
                 }
 
                 Log::critical($th->getMessage());
@@ -167,9 +180,9 @@ class DriverController extends Controller
             // Register driver
             DB::beginTransaction();
             try {
-                $request->file('profile')->storeAs('public/drivers', $profile_picture_name);
-                $request->file('driver_picture_id_card')->storeAs('public/drivers/idcard', $idcard_picture);
-                $request->file('driver_license_picture')->storeAs('public/drivers/driver_licenses', $driver_license_picture_name);
+                $request->file('profile')->storeAs('public' . DIRECTORY_SEPARATOR . 'drivers', $profile_picture_name);
+                $request->file('driver_picture_id_card')->storeAs('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'idcard', $idcard_picture);
+                $request->file('driver_license_picture')->storeAs('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'driver_licenses', $driver_license_picture_name);
 
                 Driver::create($request->except([
                     '_token', 'profile', 'driver_picture_id_card', 'driver_license_picture'
@@ -179,16 +192,16 @@ class DriverController extends Controller
             } catch (\Throwable $th) {
                 DB::rollBack();
 
-                if (Storage::exists('public/drivers/' . $profile_picture_name)) {
-                    Storage::delete('public/drivers/' . $profile_picture_name);
+                if (Storage::exists('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . $profile_picture_name)) {
+                    Storage::delete('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . $profile_picture_name);
                 }
 
-                if (Storage::exists('public/drivers/idcard/' . $idcard_picture)) {
-                    Storage::delete('public/drivers/idcard/' . $idcard_picture);
+                if (Storage::exists('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'idcard' . DIRECTORY_SEPARATOR . $idcard_picture)) {
+                    Storage::delete('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'idcard' . DIRECTORY_SEPARATOR . $idcard_picture);
                 }
 
-                if (Storage::exists('public/drivers/driver_licenses/' . $driver_license_picture_name)) {
-                    Storage::delete('public/drivers/driver_licenses/' . $driver_license_picture_name);
+                if (Storage::exists('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'driver_licenses' . DIRECTORY_SEPARATOR . $driver_license_picture_name)) {
+                    Storage::delete('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'driver_licenses' . DIRECTORY_SEPARATOR . $driver_license_picture_name);
                 }
 
                 Log::critical($th->getMessage());

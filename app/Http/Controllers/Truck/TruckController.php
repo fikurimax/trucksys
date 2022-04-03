@@ -117,7 +117,7 @@ class TruckController extends Controller
                 foreach ($request->file('photos') as $key => $value) {
                     $filenames[$i] = uniqid($key) . "." . $value->getClientOriginalExtension();
 
-                    $value->storeAs('public/trucks', $filenames[$i]);
+                    $value->storeAs('public' . DIRECTORY_SEPARATOR . 'trucks', $filenames[$i]);
                     $i++;
                 }
             }
@@ -154,8 +154,8 @@ class TruckController extends Controller
 
                 if (!empty($request->file('photos'))) {
                     foreach ($filenames as $filename) {
-                        if (Storage::exists('trucks' . DIRECTORY_SEPARATOR . $filename)) {
-                            Storage::delete('trucks' . DIRECTORY_SEPARATOR . $filename);
+                        if (Storage::exists('public' . DIRECTORY_SEPARATOR . 'trucks' . DIRECTORY_SEPARATOR . $filename)) {
+                            Storage::delete('public' . DIRECTORY_SEPARATOR . 'trucks' . DIRECTORY_SEPARATOR . $filename);
                         }
                     }
                 }
@@ -175,7 +175,7 @@ class TruckController extends Controller
             for ($i = 0; $i < count($request->file('photos')); $i++) {
                 $filenames[$i] = uniqid("$i") . "." . $request->file('photos')[$i]->getClientOriginalExtension();
 
-                $request->file('photos')[$i]->storeAs('public/trucks', $filenames[$i]);
+                $request->file('photos')[$i]->storeAs('public' . DIRECTORY_SEPARATOR . 'trucks', $filenames[$i]);
             }
 
             DB::beginTransaction();
@@ -206,8 +206,8 @@ class TruckController extends Controller
                 DB::rollBack();
 
                 foreach ($filenames as $filename) {
-                    if (Storage::exists('trucks' . DIRECTORY_SEPARATOR . $filename)) {
-                        Storage::delete('trucks' . DIRECTORY_SEPARATOR . $filename);
+                    if (Storage::exists('public' . DIRECTORY_SEPARATOR . 'trucks' . DIRECTORY_SEPARATOR . $filename)) {
+                        Storage::delete('public' . DIRECTORY_SEPARATOR . 'trucks' . DIRECTORY_SEPARATOR . $filename);
                     }
                 }
 
@@ -230,7 +230,7 @@ class TruckController extends Controller
                 );
         }
 
-        return redirect()->route('vehicle.index');
+        return redirect()->route('vehicle.index', ['vid' => $request->post('id_vendor')]);
     }
 
     public function delete(Request $request)

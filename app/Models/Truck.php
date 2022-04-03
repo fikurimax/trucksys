@@ -93,7 +93,7 @@ class Truck extends Model
 
         static::deleting(function ($truck) {
             foreach ($truck->photos() as $photo) {
-                Storage::delete('trucks' . DIRECTORY_SEPARATOR . $photo->filename);
+                Storage::delete('public' . DIRECTORY_SEPARATOR . 'trucks' . DIRECTORY_SEPARATOR . $photo->filename);
             }
 
             $truck->photos()->delete();
