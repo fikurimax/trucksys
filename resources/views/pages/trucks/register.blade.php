@@ -81,7 +81,7 @@
                         <select class="form-control" name="tahun_pembuatan"
                             id="vehicle_year_made">
                             @for ($i = date('Y'); $i >= 2000; $i--)
-                            @if (isset($vehicle) || old('tahun_pembuatan') != '')
+                            @if (isset($vehicle))
                                 @if ($vehicle['tahun_pembuatan'] == $i || old('tahun_pembuatan') == $i)
                                     <option value="{{ $i }}" selected>{{ $i }}</option>
                                 @else
@@ -123,7 +123,7 @@
                             value="{{ (isset($vehicle)) ? $vehicle['tahun_registrasi'] : old('tahun_registrasi', '') }}"
                             id="vehicle_registered">
                             @for ($i = date('Y'); $i >= 2000; $i--)
-                            @if (isset($vehicle) || old('tahun_registrasi') != '')
+                            @if (isset($vehicle))
                                 @if ($vehicle['tahun_registrasi'] == $i || old('tahun_registrasi') == $i)
                                     <option value="{{ $i }}" selected>{{ $i }}</option>
                                 @else
