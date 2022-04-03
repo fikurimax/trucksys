@@ -81,8 +81,10 @@
                         <select class="form-control" name="tahun_pembuatan"
                             id="vehicle_year_made">
                             @for ($i = date('Y'); $i >= 2000; $i--)
-                            @if (isset($vehicle))
-                                @if ($vehicle['tahun_pembuatan'] == $i || old('tahun_pembuatan') == $i)
+                            @if (old('tahun_pembuatan') == $i)
+                                <option value="{{ $i }}" selected>{{ $i }}</option>
+                            @elseif (isset($vehicle))
+                                @if ($vehicle['tahun_pembuatan'] == $i)
                                     <option value="{{ $i }}" selected>{{ $i }}</option>
                                 @else
                                     <option value="{{ $i }}">{{ $i }}</option>
@@ -123,8 +125,10 @@
                             value="{{ (isset($vehicle)) ? $vehicle['tahun_registrasi'] : old('tahun_registrasi', '') }}"
                             id="vehicle_registered">
                             @for ($i = date('Y'); $i >= 2000; $i--)
-                            @if (isset($vehicle))
-                                @if ($vehicle['tahun_registrasi'] == $i || old('tahun_registrasi') == $i)
+                            @if (old('tahun_registrasi') == $i)
+                                <option value="{{ $i }}" selected>{{ $i }}</option>
+                            @elseif (isset($vehicle))
+                                @if ($vehicle['tahun_registrasi'] == $i)
                                     <option value="{{ $i }}" selected>{{ $i }}</option>
                                 @else
                                     <option value="{{ $i }}">{{ $i }}</option>
@@ -156,7 +160,7 @@
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                        <label for="vehicle_tax_ttl">Masa Berlaku Pajak Kendaraan*</label>
+                        <label for="vehicle_tax_ttl">Masa Berlaku Pajak Kendaraan* (Tgl/Bln/Tahun)</label>
                         <div class="input-group date" id="vehicle_tax_ttl" data-target-input="nearest">
                             <input type="text" name="masa_berlaku_pajak_kendaraan"
                                 value="{{ (isset($vehicle)) ? date('d/m/Y', strtotime($vehicle['masa_berlaku_pajak_kendaraan'])) : old('masa_berlaku_pajak_kendaraan') }}"
@@ -174,7 +178,7 @@
                             id="vehicle_license_location_code" placeholder="Kode Lokasi Pada STNK">
                     </div>
                     <div class="form-group">
-                        <label for="vehicle_license_ttl">Masa Berlaku STNK*</label>
+                        <label for="vehicle_license_ttl">Masa Berlaku STNK* (Tgl/Bln/Tahun)</label>
                         <div class="input-group date" id="vehicle_license_ttl" data-target-input="nearest">
                             <input type="text" name="masa_berlaku_stnk"
                                 value="{{ (isset($vehicle)) ? date('d/m/Y', strtotime($vehicle['masa_berlaku_stnk'])) : old('masa_berlaku_stnk') }}"
@@ -198,7 +202,7 @@
                             id="vehicle_number_of_kir" placeholder="K81957192">
                     </div>
                     <div class="form-group">
-                        <label for="vehicle_kir_ttl">Masa Berlaku KIR*</label>
+                        <label for="vehicle_kir_ttl">Masa Berlaku KIR* (Tgl/Bln/Tahun)</label>
                         <div class="input-group date" id="vehicle_kir_ttl" data-target-input="nearest">
                             <input type="text" name="masa_berlaku_kir"
                                 value="{{ (isset($vehicle)) ? date('d/m/Y', strtotime($vehicle['masa_berlaku_kir'])) : old('masa_berlaku_kir') }}"
