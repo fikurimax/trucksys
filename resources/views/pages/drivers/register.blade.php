@@ -183,7 +183,7 @@
                         <div class="input-group">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="driver_picture_id_card"
-                                    id="driver_picture_id_card" accept="image/*" required>
+                                    id="driver_picture_id_card" accept="image/*" @if (!isset($driver)) required @endif>
                                 <label class="custom-file-label" id="driver_picture_id_card_desc" for="driver_picture_id_card">Pilih file</label>
                             </div>
                         </div>
@@ -195,7 +195,7 @@
                         <div class="input-group">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="driver_license_picture"
-                                    id="driver_license_picture" accept="image/*" required>
+                                    id="driver_license_picture" accept="image/*" @if (!isset($driver)) required @endif>
                                 <label class="custom-file-label" id="driver_license_picture_desc" for="driver_license_picture">Pilih file</label>
                             </div>
                         </div>
