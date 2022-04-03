@@ -2,7 +2,11 @@
 
 @section('content_header')
 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-    {{ __('Daftarkan Pengemudi') }}
+    @if (isset($driver))
+        {{ __('Ubah data Pengemudi') }}
+    @else
+        {{ __('Daftarkan Pengemudi') }}
+    @endif
 </h2>
 @endsection
 
@@ -72,7 +76,7 @@
         <form action="{{ route('driver.save') }}" method="post" enctype="multipart/form-data">
             @csrf
             @if (isset($driver))
-                <input type="hidden" name="id" value="{{ $driver->id }}">
+                <input type="hidden" name="id" id="driver-id" value="{{ $driver->id }}">
             @endif
             <div class="row mb-4">
                 <div class="col-sm-6 col-md-11">
@@ -91,7 +95,7 @@
                             <div class="col-sm-12 col-md-5">
                                 <div id="profile">
                                     <div class="dashes"></div>
-                                    <label>Click to browse or drag an image here</label>
+                                    <label>Klik disini untuk mengunggah foto</label>
                                 </div>
                                 <input type="file" accept="image/*" name="profile" id="mediaFile">
                             </div>
@@ -230,11 +234,13 @@
         });
 
         $('#submit-btn').on('click', function (e) {
-            let profileState = $('#mediaFile').val();
-            if (profileState == '') {
-                alert('Silakan uppload foto diri anda');
-                e.preventDefault();
-                return;
+            if (document.body.contains(document.getElementById('driver-id'))) {
+                let profileState = $('#mediaFile').val();
+                if (profileState == '') {
+                    alert('Silakan uppload foto diri anda');
+                    e.preventDefault();
+                    return;
+                }
             }
         });
 
