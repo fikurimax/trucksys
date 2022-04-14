@@ -28,19 +28,18 @@
     <div class="card-body">
         <div class="row">
             <div class="col-sm-12 col-md-7">
-                <div class="row mb-4">
-                    <h5>Biodata</h5>
-                </div>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-sm-12 col-md-4 mb-2 text-center">
                         <a href="{{ asset('storage/drivers/' . $driver->photo) }}" data-lightbox="{{ $driver->photo }}" data-title="Foto diri {{ $driver->nama }}">
-                            <img src="{{ asset('storage/drivers/' . $driver->photo) }}" 
-                                alt="Foto profile" 
-                                width="150" 
-                                style="border-radius: 8px; box-shadow: 1px 1px 4px;">
+                            <img src="{{ asset('storage/drivers/' . $driver->photo) }}" alt="Foto profile" width="150" style="border-radius: 8px; box-shadow: 1px 1px 4px;">
                         </a>
                     </div>
-                    <div class="col-8">
+                    <div class="col-sm-12 col-md-8">
+                        <div class="row mb-4">
+                            <h4>
+                                <b>Biodata</b>
+                            </h4>
+                        </div>
                         <div class="form-group">
                             <label>Nama Lengkap</label>
                             <input class="form-control" value="{{ $driver->nama }}" disabled>
@@ -66,7 +65,9 @@
             </div>
             <div class="col-sm-12 col-md-5">
                 <div class="row mb-4">
-                    <h5>Data Legalitas</h5>
+                    <h4>
+                        <b>Data Legalitas</b>
+                    </h4>
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -85,16 +86,14 @@
                         <div class="form-group">
                             <label>Foto KTP</label>
                             <br>
-                            <a href="{{ asset('storage/drivers/idcard/' . $driver->photo_ktp) }}" class="see-picture-container"
-                                data-lightbox="{{ $driver->photo_ktp }}" data-title="Foto KTP {{ $driver->nama }}">
+                            <a href="{{ asset('storage/drivers/idcard/' . $driver->photo_ktp) }}" class="see-picture-container" data-lightbox="{{ $driver->photo_ktp }}" data-title="Foto KTP {{ $driver->nama }}">
                                 Lihat foto
                             </a>
                         </div>
                         <div class="form-group">
                             <label>Foto SIM</label>
                             <br>
-                            <a href="{{ asset('storage/drivers/driver_licenses/' . $driver->photo_sim) }}" 
-                                data-lightbox="{{ $driver->photo_sim }}" data-title="Foto SIM {{ $driver->nama }}" class="see-picture-container">
+                            <a href="{{ asset('storage/drivers/driver_licenses/' . $driver->photo_sim) }}" data-lightbox="{{ $driver->photo_sim }}" data-title="Foto SIM {{ $driver->nama }}" class="see-picture-container">
                                 Lihat foto
                             </a>
                         </div>
@@ -108,23 +107,23 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/lightbox.min.css') }}">
-    <style>
-        .see-picture-container {
-            width: 100%;
-            padding: 10px 5px;
-            background-color: aliceblue;
-            text-decoration: none;
-        }
-    </style>
+<link rel="stylesheet" href="{{ asset('css/lightbox.min.css') }}">
+<style>
+    .see-picture-container {
+        width: 100%;
+        padding: 10px 5px;
+        background-color: aliceblue;
+        text-decoration: none;
+    }
+</style>
 @endsection
 
 @section('js')
 <script src="{{ asset('js/lightbox.min.js') }}"></script>
 <script>
-    $(function () {
-        $('#deleteDriverButton').on('click', function (e) {
-            if(!confirm('Apakah anda yakin ingin menghapus driver {{ $driver->nama }}' )) {
+    $(function() {
+        $('#deleteDriverButton').on('click', function(e) {
+            if (!confirm('Apakah anda yakin ingin menghapus driver {{ $driver->nama }}')) {
                 e.preventDefault();
             }
         });

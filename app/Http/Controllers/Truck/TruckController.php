@@ -139,12 +139,15 @@ class TruckController extends Controller
 
                 if (!empty($request->file('photos'))) {
                     for ($i = 0; $i < count($filenames); $i++) {
-                        TruckPhotos::where([
+                        $photo = TruckPhotos::firstWhere([
                             'description' => $request->post('descriptions')[$i],
                             'id_truck' => $truck->id
-                        ])->update([
-                            'filename' => $filenames[$i]
                         ]);
+                        $lastFilename = $photo->filename;
+                        $photo->filename = $filenames[$i];
+                        $photo->save();
+
+                        @Storage::delete('public' . DIRECTORY_SEPARATOR . 'trucks' . DIRECTORY_SEPARATOR . $lastFilename);
                     }
                 }
 

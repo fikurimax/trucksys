@@ -21,6 +21,11 @@
                 <input type="hidden" name="id" value="{{ $vehicle->id }}" @if (!isset($vehicle)) disabled @endif>
             @endif
             <div class="row p-4">
+                <div class="col-12">
+                    <h5>
+                        <b>Isi Data Kelengkapan Kendaraan</b>
+                    </h5>
+                </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="vehicle_pmku">Nomor PMKU*</label>
@@ -151,14 +156,14 @@
                             value="{{ (isset($vehicle)) ? $vehicle['alamat_pemilik'] : old('alamat_pemilik', '') }}"
                             id="vehicle_vehicle_address" placeholder="Alamat Pemilik">
                     </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="vehicle_license_number">Nomor STNK*</label>
                         <input type="text" class="form-control" name="nomor_stnk"
                             value="{{ (isset($vehicle)) ? $vehicle['nomor_stnk'] : old('nomor_stnk', '') }}"
                             id="vehicle_license_number" placeholder="Nomor STNK Pemilik">
                     </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="vehicle_tax_ttl">Masa Berlaku Pajak Kendaraan* (Tgl/Bln/Tahun)</label>
                         <div class="input-group date" id="vehicle_tax_ttl" data-target-input="nearest">
@@ -213,6 +218,15 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row p-4">
+                <div class="col-12">
+                    <h5>
+                        <b>Upload Foto Kelengkapan Kendaraan</b>
+                    </h5>
+                </div>
+                <div class="col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="vehicle_picture">Foto Kendaraan*</label>
                         <div class="input-group">
@@ -256,6 +270,23 @@
                             2Mb</small>
                     </div>
                     <div class="form-group">
+                        <label for="vehicle_emergency_tool_picture">Foto Alat Tanggap Darurat Pada Kendaraan*</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="hidden" id="vehicle_emergency_tool_picture_desc" name="descriptions[]"
+                                    value="Foto Alat Tanggap Darurat Pada Kendaraan" disabled>
+                                <input type="file" class="custom-file-input" name="photos[]"
+                                    id="vehicle_emergency_tool_picture" accept="image/*" @if(!isset($vehicle)) required @endif
+                                    onchange="document.getElementById('vehicle_emergency_tool_picture_desc').removeAttribute('disabled'); previewName(this, 'vehicle_emergency_tool_picture_label')">
+                                <label id="vehicle_emergency_tool_picture_label" class="custom-file-label" for="vehicle_emergency_tool_picture">Pilih file</label>
+                            </div>
+                        </div>
+                        <small>Format file harus berupa gambar (.jpg, .jpeg, .png, .svg, dan .gif) <br> Maximal
+                            2Mb</small>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
                         <label for="vehicle_bpkb_picture">Foto BPKB*</label>
                         <div class="input-group">
                             <div class="custom-file">
@@ -294,21 +325,6 @@
                                     id="vehicle_firstaid_box_picture" accept="image/*" @if(!isset($vehicle)) required @endif
                                     onchange="document.getElementById('vehicle_firstaid_box_picture_desc').removeAttribute('disabled'); previewName(this, 'vehicle_firstaid_box_picture_label')">
                                 <label id="vehicle_firstaid_box_picture_label" class="custom-file-label" for="vehicle_firstaid_box_picture">Pilih file</label>
-                            </div>
-                        </div>
-                        <small>Format file harus berupa gambar (.jpg, .jpeg, .png, .svg, dan .gif) <br> Maximal
-                            2Mb</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicle_emergency_tool_picture">Foto Alat Tanggap Darurat Pada Kendaraan*</label>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="hidden" id="vehicle_emergency_tool_picture_desc" name="descriptions[]"
-                                    value="Foto Alat Tanggap Darurat Pada Kendaraan" disabled>
-                                <input type="file" class="custom-file-input" name="photos[]"
-                                    id="vehicle_emergency_tool_picture" accept="image/*" @if(!isset($vehicle)) required @endif
-                                    onchange="document.getElementById('vehicle_emergency_tool_picture_desc').removeAttribute('disabled'); previewName(this, 'vehicle_emergency_tool_picture_label')">
-                                <label id="vehicle_emergency_tool_picture_label" class="custom-file-label" for="vehicle_emergency_tool_picture">Pilih file</label>
                             </div>
                         </div>
                         <small>Format file harus berupa gambar (.jpg, .jpeg, .png, .svg, dan .gif) <br> Maximal

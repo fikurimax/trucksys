@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Vendor;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -91,8 +93,8 @@ class Truck extends Model
     {
         parent::booted();
 
-        static::deleting(function ($truck) {
-            foreach ($truck->photos() as $photo) {
+        static::deleted(function ($truck) {
+            foreach ($truck->photos as $photo) {
                 Storage::delete('public' . DIRECTORY_SEPARATOR . 'trucks' . DIRECTORY_SEPARATOR . $photo->filename);
             }
 

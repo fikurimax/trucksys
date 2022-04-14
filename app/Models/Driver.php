@@ -56,7 +56,7 @@ class Driver extends Model
         parent::booted();
 
         static::deleting(function ($driver) {
-            @Storage::delete('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . $driver->profile);
+            @Storage::delete('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . $driver->photo);
             @Storage::delete('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'idcard' . DIRECTORY_SEPARATOR . $driver->photo_ktp);
             @Storage::delete('public' . DIRECTORY_SEPARATOR . 'drivers' . DIRECTORY_SEPARATOR . 'driver_licenses' . DIRECTORY_SEPARATOR . $driver->photo_sim);
         });

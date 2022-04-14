@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>PT. Pelindo</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => '<b>PT. PELINDO</b>',
+    'logo_img' => 'images/logo_mini.png',
+    'logo_img_class' => 'brand-image',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'PT. Pelindo',
+    'logo_img_alt' => 'Logo PT. Pelindo',
 
     /*
     |--------------------------------------------------------------------------
@@ -248,12 +248,16 @@ return [
         // ],
         [
             'text'        => 'Dashboard',
-            'url'         => 'dashboard',
+            'url'         => '/',
             'icon'        => 'far fa-fw fa-file',
         ],
-        ['header' => 'STID'],
+        [
+            'header' => 'STID',
+            'can'     => 'crud-stid'
+        ],
         [
             'text'    => 'Data STID',
+            'can'     => 'crud-stid',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
@@ -288,9 +292,13 @@ return [
             'url'  => 'driver/registration',
             'icon' => 'fas fa-plus'
         ],
-        ['header' => 'Surat Jalan'],
+        [
+            'header' => 'Surat Jalan',
+            'can'  => 'confirm-safe-conduct',
+        ],
         [
             'text' => 'Surat Jalan',
+            'can'  => 'confirm-safe-conduct',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],

@@ -2,12 +2,12 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <x-application-logo />
             </a>
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+            {{ __('Masukan alamat email yang terdaftar untuk meminta link perubahan password') }}
         </div>
 
         <!-- Session Status -->
@@ -28,8 +28,13 @@
 
             <div class="flex items-center justify-end mt-4">
                 <x-button>
-                    {{ __('Email Password Reset Link') }}
+                    {{ __('Kirim') }}
                 </x-button>
+            </div>
+            <div class="flex items-center justify-end mt-4">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="#" onclick="window.history.back()">
+                    {{ __('Kembali') }}
+                </a>
             </div>
         </form>
     </x-auth-card>
