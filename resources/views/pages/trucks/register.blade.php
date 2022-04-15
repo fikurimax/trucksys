@@ -16,7 +16,6 @@
         @endif
         <form action="{{ route('vehicle.save') }}" method="post" enctype="multipart/form-data">
             @csrf
-            <input type="hidden" name="id_vendor" value="{{ $vendor->id }}">
             @if (isset($vehicle))
                 <input type="hidden" name="id" value="{{ $vehicle->id }}" @if (!isset($vehicle)) disabled @endif>
             @endif
@@ -100,62 +99,6 @@
                             @endfor
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="vehicle_structure_number">Nomor Rangka*</label>
-                        <input type="text" class="form-control" name="nomor_rangka"
-                            value="{{ (isset($vehicle)) ? $vehicle['nomor_rangka'] : old('nomor_rangka', '') }}"
-                            id="vehicle_structure_number" placeholder="AB33432FSKJ9">
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicle_machine_number">Nomor Mesin*</label>
-                        <input type="text" class="form-control" name="nomor_mesin"
-                            value="{{ (isset($vehicle)) ? $vehicle['nomor_mesin'] : old('nomor_mesin', '') }}"
-                            id="vehicle_machine_number" placeholder="AB33432FSKJ9">
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicle_tnkb_color">Warna TNKB*</label>
-                        <input type="text" class="form-control" name="warna_tnkb"
-                            value="{{ (isset($vehicle)) ? $vehicle['warna_tnkb'] : old('warna_tnkb', '') }}"
-                            id="vehicle_tnkb_color" placeholder="PUTIH">
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicle_fuel_type">Bahan Bakar*</label>
-                        <input type="text" class="form-control" name="bahan_bakar"
-                            value="{{ (isset($vehicle)) ? $vehicle['bahan_bakar'] : old('bahan_bakar', '') }}"
-                            id="vehicle_fuel_type" placeholder="BENSIN">
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicle_registered">Tahun Registrasi*</label>
-                        <select class="form-control" name="tahun_registrasi"
-                            value="{{ (isset($vehicle)) ? $vehicle['tahun_registrasi'] : old('tahun_registrasi', '') }}"
-                            id="vehicle_registered">
-                            @for ($i = date('Y'); $i >= 2000; $i--)
-                            @if (old('tahun_registrasi') == $i)
-                                <option value="{{ $i }}" selected>{{ $i }}</option>
-                            @elseif (isset($vehicle))
-                                @if ($vehicle['tahun_registrasi'] == $i)
-                                    <option value="{{ $i }}" selected>{{ $i }}</option>
-                                @else
-                                    <option value="{{ $i }}">{{ $i }}</option>
-                                @endif
-                            @else
-                                <option value="{{ $i }}">{{ $i }}</option>
-                            @endif
-                            @endfor
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicle_owner_name">Nama Pemilik*</label>
-                        <input type="text" class="form-control" name="nama_pemilik"
-                            value="{{ (isset($vehicle)) ? $vehicle['nama_pemilik'] : old('nama_pemilik', '') }}"
-                            id="vehicle_owner_name" placeholder="Nama Pemilik">
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicle_vehicle_address">Alamat Pemilik*</label>
-                        <input type="text" class="form-control" name="alamat_pemilik"
-                            value="{{ (isset($vehicle)) ? $vehicle['alamat_pemilik'] : old('alamat_pemilik', '') }}"
-                            id="vehicle_vehicle_address" placeholder="Alamat Pemilik">
-                    </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
@@ -177,12 +120,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="vehicle_license_location_code">Kode Lokasi Pada STNK*</label>
-                        <input type="text" class="form-control" name="kode_lokasi_pada_stnk"
-                            value="{{ (isset($vehicle)) ? $vehicle['kode_lokasi_pada_stnk'] : old('kode_lokasi_pada_stnk', '') }}"
-                            id="vehicle_license_location_code" placeholder="Kode Lokasi Pada STNK">
-                    </div>
-                    <div class="form-group">
                         <label for="vehicle_license_ttl">Masa Berlaku STNK* (Tgl/Bln/Tahun)</label>
                         <div class="input-group date" id="vehicle_license_ttl" data-target-input="nearest">
                             <input type="text" name="masa_berlaku_stnk"
@@ -193,12 +130,6 @@
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicle_head_of_kir">Kepala KIR*</label>
-                        <input type="text" class="form-control" name="kepala_kir"
-                            value="{{ (isset($vehicle)) ? $vehicle['kepala_kir'] : old('kepala_kir', '') }}"
-                            id="vehicle_head_of_kir" placeholder="Nama Kepala KIR">
                     </div>
                     <div class="form-group">
                         <label for="vehicle_number_of_kir">Nomor KIR*</label>
@@ -363,7 +294,7 @@
                         </div>
                     @endif
                     <div class="row">
-                        <a href="{{ route('vehicle.index', ['vid' => $vendor->id]) }}" class="col-5 btn btn-danger" role="button">Batal</a>
+                        <a href="{{ route('vehicle.index') }}" class="col-5 btn btn-danger" role="button">Batal</a>
                         <div class="col-1"></div>
                         <button type="submit" class="col-5 btn btn-primary">Simpan</button>
                     </div>

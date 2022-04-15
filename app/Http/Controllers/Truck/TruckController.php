@@ -16,37 +16,16 @@ use Illuminate\Support\Facades\Storage;
 
 class TruckController extends Controller
 {
-    public function vendorShouldValid(Request $request)
-    {
-        if ($request->isNotFilled('vid')) {
-            return redirect()->route('vendor.index');
-        }
-    }
-
     public function index(Request $request)
     {
-        $this->vendorShouldValid($request);
-
-        $vendor = Vendor::find($request->get('vid'));
-        if ($vendor == null) {
-            return redirect()->route('vendor.index');
-        }
-
         return view('pages.trucks.index', [
-            'vendor'    => $vendor,
-            'vehicles'  => Truck::where('id_vendor', $request->get('vid'))->orderBy('id', 'desc')->get()
+            'vendor'    => Auth::user(),
+            'vehicles'  => Truck::where('id_vendor', Auth::id())->orderBy('id', 'desc')->get()
         ]);
     }
 
     public function detail(Request $request)
     {
-        $this->vendorShouldValid($request);
-
-        $vendor = Vendor::find($request->get('vid'));
-        if ($vendor == null) {
-            return redirect()->route('vendor.index');
-        }
-
         if ($request->isNotFilled('id')) {
             return back()->withErrors([
                 'ID kendaraan tidak dikenali'
@@ -55,38 +34,22 @@ class TruckController extends Controller
 
         $vehicle = Truck::find($request->get('id'));
         if ($vehicle == null) {
-            return redirect()->route('vehicle.index', ['vid' => $request->get('vid')]);
+            return redirect()->route('vehicle.index', ['vid' => Auth::id()]);
         }
 
         return view('pages.trucks.detail', [
-            'vendor'    => $vendor,
+            'vendor'    => Auth::user(),
             'vehicle'   => $vehicle
         ]);
     }
 
     public function register(Request $request)
     {
-        $this->vendorShouldValid($request);
-
-        $vendor = Vendor::find($request->get('vid'));
-        if ($vendor == null) {
-            return redirect()->route('vendor.index');
-        }
-
-        return view('pages.trucks.register', [
-            'vendor'    => $vendor
-        ]);
+        return view('pages.trucks.register');
     }
 
     public function update(Request $request)
     {
-        $this->vendorShouldValid($request);
-
-        $vendor = Vendor::find($request->get('vid'));
-        if ($vendor == null) {
-            return redirect()->route('vendor.index');
-        }
-
         if ($request->isNotFilled('id')) {
             return back();
         }
@@ -97,7 +60,6 @@ class TruckController extends Controller
         }
 
         return view('pages.trucks.register', [
-            'vendor'    => $vendor,
             'vehicle'   => $vehicle
         ]);
     }
@@ -185,7 +147,8 @@ class TruckController extends Controller
             try {
                 $request->request->add([
                     'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
+                    'updated_at' => Carbon::now(),
+                    'id_vendor'  => Auth::id()
                 ]);
 
                 // Create vehicle
@@ -243,7 +206,7 @@ class TruckController extends Controller
         }
 
         if ($request->isNotFilled('id')) {
-            return redirect()->route('vehicle.index', ['vid' => $request->get('vid')]);
+            return redirect()->route('vehicle.index', ['vid' => Auth::id()]);
         }
 
         $ok = Truck::find($request->get('id'))->delete();
@@ -251,6 +214,6 @@ class TruckController extends Controller
             return back()->withErrors(['Terjadi gangguan pada server']);
         }
 
-        return redirect()->route('vehicle.index', ['vid' => $request->get('vid')]);
+        return redirect()->route('vehicle.index', ['vid' => Auth::id()]);
     }
 }

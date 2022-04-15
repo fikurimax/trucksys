@@ -2,22 +2,12 @@
 
 @section('content_header')
 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-    {{ __('Truk ' . $vendor->nama_perusahaan) }}
+    {{ __('Data kendaraan') }} <b>{{ \Auth::user()->name }}</b>
 </h2>
 @endsection
 
 @section('content')
 <div class="card">
-    <div class="card-header">
-        <div class="card-tools">
-            <a href="{{ route('vendor.index') }}" class="btn btn-danger" role="button">
-                Kembali
-            </a>
-            <a href="{{ route('vehicle.register', ['vid' => $vendor->id]) }}" class="btn btn-primary" role="button">
-                Daftarkan Truk baru
-            </a>
-        </div>
-    </div>
     <div class="card-body">
         <div class="dataTables_wrapper dt-bootstrap4">
             <div class="row">
@@ -70,7 +60,7 @@
                                         </a>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ route('vehicle.detail', ['id' => $vehicles[$i]->id, 'vid' => $vendor->id]) }}" class="btn btn-success" role="button">Detail</a>
+                                        <a href="{{ route('vehicle.detail', ['id' => $vehicles[$i]->id]) }}" class="btn btn-success" role="button">Detail</a>
                                     </td>
                                 </tr>
                             @endfor

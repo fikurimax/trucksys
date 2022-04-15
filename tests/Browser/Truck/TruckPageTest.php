@@ -33,22 +33,13 @@ class TruckPageTest extends DuskTestCase
                 ->type('isi_silinder', 'isi_silinder')
                 ->type('kapasitas', 'kapasitas')
                 ->type('tahun_pembuatan', 'tahun_pembuatan')
-                ->type('nomor_rangka', 'nomor_rangka')
-                ->type('nomor_mesin', 'nomor_mesin')
-                ->type('warna_tnkb', 'warna_tnkb')
-                ->type('bahan_bakar', 'bahan_bakar')
-                ->type('tahun_registrasi', 'tahun_registrasi')
-                ->type('nama_pemilik', 'nama_pemilik')
-                ->type('alamat_pemilik', 'alamat_pemilik')
                 ->type('nomor_stnk', 'nomor_stnk')
                 ->type('masa_berlaku_pajak_kendaraan', 'masa_berlaku_pajak_kendaraan')
-                ->type('kode_lokasi_pada_stnk', 'kode_lokasi_pada_stnk')
                 ->type('masa_berlaku_stnk', 'masa_berlaku_stnk')
                 ->type('kepala_kir', 'kepala_kir')
                 ->type('nomor_kir', 'nomor_kir')
                 ->type('masa_berlaku_kir', 'masa_berlaku_kir')
-                ->type('id_vendor', 'id_vendor')
-                ->type('id_driver', 'id_driver');
+                ->type('id_vendor', 'id_vendor');
         });
     }
 }

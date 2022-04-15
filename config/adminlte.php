@@ -249,7 +249,7 @@ return [
         [
             'text'        => 'Dashboard',
             'url'         => '/',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-home',
         ],
         [
             'header' => 'STID',
@@ -270,15 +270,15 @@ return [
                 ],
             ],
         ],
-        ['header' => 'Vendor'],
+        ['header' => 'Data kendaraan'],
         [
-            'text' => 'Vendor',
-            'url'  => 'vendors',
+            'text' => 'Kendaraan',
+            'url'  => 'vehicle',
             'icon' => 'fas fa-truck',
         ],
         [
-            'text' => 'Tambah Vendor',
-            'url'  => 'vendors/registration',
+            'text' => 'Tambah Kendaraan',
+            'url'  => 'vehicle/registration',
             'icon' => 'fas fa-plus-square',
         ],
         ['header' => 'Driver'],
