@@ -302,6 +302,14 @@ return [
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
+        [
+            'header' => 'Akun',
+        ],
+        [
+            'text'        => 'Akun',
+            'url'         => 'account/detail',
+            'icon'        => 'fas fa-building',
+        ],
     ],
 
     /*

@@ -2,7 +2,7 @@
 
 @section('content_header')
 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-    {{ __('Data kendaraan') }} <b>{{ \Auth::user()->name }}</b>
+    {{ __('Data kendaraan') }} di <b>{{ \Auth::user()->name }}</b>
 </h2>
 @endsection
 
@@ -52,7 +52,9 @@
                                     <td>{{ $vehicles[$i]->nomor_stnk }}</td>
                                     <td>{{ $vehicles[$i]->nomor_kir }}</td>
                                     <td class="text-center">
-                                        <a href="{{ asset('storage/trucks/' . $vehicles[$i]->photos[0]->filename) }}" data-lightbox="{{ $vehicles[$i]->photos[0]->filename }}" data-title="Foto Kendaraan">
+                                        <a href="{{ asset('storage/trucks/' . $vehicles[$i]->photos[0]->filename) }}" 
+                                            data-lightbox="{{ $vehicles[$i]->photos[0]->filename }}" 
+                                            data-title="Foto Kendaraan">
                                             <img src="{{ asset('storage/trucks/'.$vehicles[$i]->photos[0]->filename) }}" 
                                                 alt="Foto unit" 
                                                 style="border-radius: 4px;"

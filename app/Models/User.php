@@ -22,6 +22,9 @@ class User extends Authenticatable
         'email',
         'phone_number',
         'password',
+        'owner_name',
+        'npwp',
+        'address',
     ];
 
     /**
@@ -42,4 +45,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Relations
+    public function documents()
+    {
+        return $this->hasMany(VendorDocument::class, 'id_vendor');
+    }
 }

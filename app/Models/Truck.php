@@ -53,7 +53,7 @@ class Truck extends Model
     // Relations
     public function vendor()
     {
-        return $this->belongsTo(Vendor::class, 'id_vendor');
+        return $this->belongsTo(User::class, 'id_vendor');
     }
 
     public function photos()

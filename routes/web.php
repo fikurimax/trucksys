@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Driver\DriverController;
 use App\Http\Controllers\Truck\TruckController;
-use App\Http\Controllers\Vendor\VendorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,9 +22,6 @@ Route::group([
     Route::get('/', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
 
     Route::name('driver.')->prefix('/driver')->group(function () {
         Route::get('/', [DriverController::class, 'index'])->name('index');
@@ -36,14 +33,6 @@ Route::group([
         Route::delete('/delete', [DriverController::class, 'delete'])->name('delete');
     });
 
-    Route::name('vendor.')->prefix('/vendors')->group(function () {
-        Route::get('/', [VendorController::class, 'index'])->name('index');
-        Route::get('/registration', [VendorController::class, 'register'])->name('register');
-        Route::get('/update', [VendorController::class, 'update'])->name('update');
-        Route::post('/save', [VendorController::class, 'save'])->name('save');
-        Route::delete('/delete', [VendorController::class, 'delete'])->name('delete');
-    });
-
     Route::name('vehicle.')->prefix('/vehicle')->group(function () {
         Route::get('/', [TruckController::class, 'index'])->name('index');
         Route::get('/detail', [TruckController::class, 'detail'])->name('detail');
@@ -51,6 +40,12 @@ Route::group([
         Route::get('/update', [TruckController::class, 'update'])->name('update');
         Route::post('/save', [TruckController::class, 'save'])->name('save');
         Route::delete('/delete', [TruckController::class, 'delete'])->name('delete');
+    });
+
+    Route::name('account.')->prefix('/account')->group(function () {
+        Route::get('/detail', [AccountController::class, 'detail'])->name('detail');
+        Route::get('/edit', [AccountController::class, 'edit'])->name('edit');
+        Route::post('/save', [AccountController::class, 'save'])->name('save');
     });
 });
 

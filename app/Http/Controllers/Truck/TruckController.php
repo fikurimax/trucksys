@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterTruckRequest;
 use App\Models\Truck;
 use App\Models\TruckPhotos;
-use App\Models\Vendor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +33,7 @@ class TruckController extends Controller
 
         $vehicle = Truck::find($request->get('id'));
         if ($vehicle == null) {
-            return redirect()->route('vehicle.index', ['vid' => Auth::id()]);
+            return redirect()->route('vehicle.index');
         }
 
         return view('pages.trucks.detail', [
@@ -201,12 +200,8 @@ class TruckController extends Controller
 
     public function delete(Request $request)
     {
-        if ($request->isNotFilled('vid')) {
-            return redirect()->route('vendor.index');
-        }
-
         if ($request->isNotFilled('id')) {
-            return redirect()->route('vehicle.index', ['vid' => Auth::id()]);
+            return redirect()->route('vehicle.index');
         }
 
         $ok = Truck::find($request->get('id'))->delete();
@@ -214,6 +209,6 @@ class TruckController extends Controller
             return back()->withErrors(['Terjadi gangguan pada server']);
         }
 
-        return redirect()->route('vehicle.index', ['vid' => Auth::id()]);
+        return redirect()->route('vehicle.index');
     }
 }
