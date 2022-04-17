@@ -83,7 +83,12 @@
             processing: true,
             dom: 'Bfrtip',
             buttons: [
-                'csv', 'excel', 'pdf', 'print'
+                {
+                    text: 'Download CSV',
+                    action: function ( e, dt, node, config ) {
+                        window.open('{{ route("driver.exportAll", ["fileType" => "csv"]) }}', '_blank');
+                    }
+                }
             ]
         });
     });

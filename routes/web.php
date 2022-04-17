@@ -21,11 +21,13 @@ Route::group([
     'middleware' => 'auth',
 ], function () {
     Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/vendor/export-all', [HomeController::class, 'exportAll'])->name('vendor.exportAll');
 
     Route::name('driver.')->prefix('/driver')->group(function () {
         Route::get('/', [DriverController::class, 'index'])->name('index');
         Route::get('/find', [DriverController::class, 'search'])->name('search');
         Route::get('/detail', [DriverController::class, 'detail'])->name('detail');
+        Route::get('/export-all', [DriverController::class, 'exportAll'])->name('exportAll');
         Route::get('/registration', [DriverController::class, 'register'])->name('register');
         Route::get('/update', [DriverController::class, 'update'])->name('update');
         Route::post('/save', [DriverController::class, 'save'])->name('save');
@@ -35,6 +37,7 @@ Route::group([
     Route::name('vehicle.')->prefix('/vehicle')->group(function () {
         Route::get('/', [TruckController::class, 'index'])->name('index');
         Route::get('/detail', [TruckController::class, 'detail'])->name('detail');
+        Route::get('/export-all', [TruckController::class, 'exportAll'])->name('exportAll');
         Route::get('/registration', [TruckController::class, 'register'])->name('register');
         Route::get('/update', [TruckController::class, 'update'])->name('update');
         Route::post('/save', [TruckController::class, 'save'])->name('save');

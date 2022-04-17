@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Driver;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\DeleteCsvFileAfterDownload;
 use App\Models\Driver;
-use App\Service\Driver\DriverBusinessService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
 class DriverController extends Controller
@@ -18,6 +19,28 @@ class DriverController extends Controller
         return view('pages.drivers.index', [
             'drivers' => Driver::get()
         ]);
+    }
+
+    public function exportAll(Request $request)
+    {
+        $username = auth()->user()->name;
+
+        $drivers = Driver::get();
+        $filename = "data-driver-" . $username . "-" . date('d-m-Y') . ".csv";
+        $handle = fopen($filename, 'w+');
+        fputcsv($handle, array('No. Reg', 'ID Driver', 'Nama Lengkap', 'Tgl. Lahir', 'Tmp. Lahir', 'Alamat', 'No. KTP', 'No. SIM', 'Masa Berlaku SIM'));
+
+        foreach ($drivers as $driver) {
+            fputcsv($handle, array($driver['nomor_registrasi'], $driver['id'], $driver['nama'], $driver['tanggal_lahir'], $driver['tempat_lahir'], $driver['alamat'], $driver['no_ktp'], $driver['no_sim'], $driver['masa_berlaku_sim']));
+        }
+
+        fclose($handle);
+
+        $headers = array(
+            'Content-Type' => 'text/csv',
+        );
+
+        return Response::download($filename, "data-driver-" . $username . "-" . date('d-m-Y') . ".csv", $headers);
     }
 
     public function detail(Request $request)

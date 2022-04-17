@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Truck;
 
+use App\Exports\TruckExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterTruckRequest;
+use App\Jobs\DeleteCsvFileAfterDownload;
 use App\Models\Truck;
 use App\Models\TruckPhotos;
 use Carbon\Carbon;
@@ -11,7 +13,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Excel;
 
 class TruckController extends Controller
 {
@@ -21,6 +25,28 @@ class TruckController extends Controller
             'vendor'    => Auth::user(),
             'vehicles'  => Truck::where('id_vendor', Auth::id())->orderBy('id', 'desc')->get()
         ]);
+    }
+
+    public function exportAll(Request $request)
+    {
+        $username = auth()->user()->name;
+
+        $trucks = Truck::where('id_vendor', Auth::id())->orderBy('id', 'desc')->get();
+        $filename = "data-truk-" . $username . "-" . date('d-m-Y') . ".csv";
+        $handle = fopen($filename, 'w+');
+        fputcsv($handle, array('Nomor PMKU', 'Nomor NPWP', 'Nomor Polisi', 'Merk', 'Model', 'Tipe Kendaraan', 'Jenis Kendaraan', 'Isi Silinder', 'Kapasitas', 'Tahun Pembuatan', 'Nomor STNK', 'Masa Berlaku STNK', 'Masa Berlaku Pajak Kendaraan', 'Nomor KIR', 'Masa Berlaku KIR', 'Vendor'));
+
+        foreach ($trucks as $truck) {
+            fputcsv($handle, array($truck['nomor_pmku'], $truck['nomor_npwp'], $truck['nomor_polisi'], $truck['merk'], $truck['model'], $truck['tipe_kendaraan'], $truck['jenis_kendaraan'], $truck['isi_silinder'], $truck['kapasitas'], $truck['tahun_pembuatan'], $truck['nomor_stnk'], $truck['masa_berlaku_stnk'], $truck['masa_berlaku_pajak_kendaraan'], $truck['nomor_kir'], $truck['masa_berlaku_kir'], $truck['vendor']['name']));
+        }
+
+        fclose($handle);
+
+        $headers = array(
+            'Content-Type' => 'text/csv',
+        );
+
+        return Response::download($filename, "data-truk-" . $username . "-" . date('d-m-Y') . ".csv", $headers);
     }
 
     public function detail(Request $request)
