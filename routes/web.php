@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Driver\DriverController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Truck\TruckController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'middleware' => 'auth',
 ], function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 
     Route::name('driver.')->prefix('/driver')->group(function () {
         Route::get('/', [DriverController::class, 'index'])->name('index');
