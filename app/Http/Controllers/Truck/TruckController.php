@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Truck;
 
+use App\Exports\TruckExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterTruckRequest;
 use App\Models\Truck;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Excel;
 
 class TruckController extends Controller
 {
@@ -21,6 +23,18 @@ class TruckController extends Controller
             'vendor'    => Auth::user(),
             'vehicles'  => Truck::where('id_vendor', Auth::id())->orderBy('id', 'desc')->get()
         ]);
+    }
+
+    public function exportAll(Request $request)
+    {
+        switch ($request->get('fileType')) {
+            case 'csv':
+                return (new TruckExport())->download('data-driver.csv', Excel::CSV, [
+                    'Content-Type' => 'text/csv'
+                ]);
+            default:
+                return back();
+        }
     }
 
     public function detail(Request $request)

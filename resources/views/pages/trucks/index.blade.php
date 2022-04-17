@@ -94,9 +94,15 @@
 <script>
     $(document).ready(function () {
         $('#datatable').DataTable({
+            processing: true,
             dom: 'Bfrtip',
             buttons: [
-                'csv', 'excel', 'pdf', 'print'
+                {
+                    text: 'Download CSV',
+                    action: function ( e, dt, node, config ) {
+                        window.open('{{ route("truck.exportAll", ["fileType" => "csv"]) }}', '_blank');
+                    }
+                }
             ]
         });
     });

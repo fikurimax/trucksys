@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Driver;
 
+use App\Exports\DriverExport;
 use App\Http\Controllers\Controller;
 use App\Models\Driver;
-use App\Service\Driver\DriverBusinessService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Excel as ExcelExcel;
 
 class DriverController extends Controller
 {
@@ -18,6 +19,18 @@ class DriverController extends Controller
         return view('pages.drivers.index', [
             'drivers' => Driver::get()
         ]);
+    }
+
+    public function exportAll(Request $request)
+    {
+        switch ($request->get('fileType')) {
+            case 'csv':
+                return (new DriverExport())->download('data-driver.csv', ExcelExcel::CSV, [
+                    'Content-Type' => 'text/csv'
+                ]);
+            default:
+                return back();
+        }
     }
 
     public function detail(Request $request)
