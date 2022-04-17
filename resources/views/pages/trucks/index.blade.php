@@ -100,7 +100,7 @@
                 {
                     text: 'Download CSV',
                     action: function ( e, dt, node, config ) {
-                        window.open('{{ route("truck.exportAll", ["fileType" => "csv"]) }}', '_blank');
+                        window.open('{{ route("vehicle.exportAll", ["fileType" => "csv"]) }}', '_blank');
                     }
                 }
             ]
