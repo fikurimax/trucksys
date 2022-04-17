@@ -25,6 +25,7 @@ class User extends Authenticatable
         'owner_name',
         'npwp',
         'address',
+        'is_updated'
     ];
 
     /**
