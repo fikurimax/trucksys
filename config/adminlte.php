@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Pelindo',
+    'title' => 'Sutera Teknologi Ultima',
     'title_prefix' => 'PT. ',
     'title_postfix' => '',
 
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>PT. PELINDO</b>',
+    'logo' => '<b>PT. Sutera Teknologi Ultima</b>',
     'logo_img' => 'images/logo_mini.png',
-    'logo_img_class' => 'brand-image',
+    'logo_img_class' => 'brand-image d-none',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Logo PT. Pelindo',
+    'logo_img_alt' => 'Logo PT. Sutera Teknologi Ultima',
 
     /*
     |--------------------------------------------------------------------------
