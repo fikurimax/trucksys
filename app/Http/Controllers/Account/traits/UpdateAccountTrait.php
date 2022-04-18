@@ -76,7 +76,6 @@ trait UpdateAccountTrait
             DB::rollBack();
 
             Log::error($th->getMessage());
-            Log::error($th->getTraceAsString());
 
             if ($request->has('documents')) {
                 for ($i = 0; $i < count($filenames); $i++) {
