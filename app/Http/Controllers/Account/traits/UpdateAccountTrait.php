@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\VendorDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -38,7 +39,7 @@ trait UpdateAccountTrait
             return back()->withErrors($validate->errors())->withInput();
         }
 
-        if ($request->filled('documents')) {
+        if ($request->has('documents')) {
             $filenames = [];
             for ($i = 0; $i < count($request->file('documents')); $i++) {
                 $filenames[$i] = uniqid($i) . "." . $request->file('documents')[$i]->getClientOriginalExtension();
@@ -54,10 +55,10 @@ trait UpdateAccountTrait
                     'owner_name' => $request->post('owner_name'),
                     'npwp' => $request->post('npwp'),
                     'address' => $request->post('address'),
-                    'is_updated' => true
+                    'is_updated' => 1
                 ]);
 
-            if ($request->filled('document')) {
+            if ($request->has('documents')) {
                 for ($i = 0; $i < count($filenames); $i++) {
                     VendorDocument::create([
                         'id_vendor' => auth()->id(),
@@ -74,7 +75,10 @@ trait UpdateAccountTrait
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            if ($request->filled('document')) {
+            Log::error($th->getMessage());
+            Log::error($th->getTraceAsString());
+
+            if ($request->has('documents')) {
                 for ($i = 0; $i < count($filenames); $i++) {
                     if (Storage::exists('public' . DIRECTORY_SEPARATOR . 'vendors' . DIRECTORY_SEPARATOR . Str::kebab(strtolower($request->post('descriptions')[$i])) . DIRECTORY_SEPARATOR . $filenames[$i])) {
                         Storage::delete('public' . DIRECTORY_SEPARATOR . 'vendors' . DIRECTORY_SEPARATOR . Str::kebab(strtolower($request->post('descriptions')[$i])) . DIRECTORY_SEPARATOR . $filenames[$i]);

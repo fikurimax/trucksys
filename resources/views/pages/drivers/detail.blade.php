@@ -41,8 +41,12 @@
                             </h4>
                         </div>
                         <div class="form-group">
-                            <label>Nama Lengkap</label>
+                            <label>Nama Pemilik/Direktur</label>
                             <input class="form-control" value="{{ $driver->nama }}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Nomor Telepon/Handphone Driver</label>
+                            <input class="form-control" value="{{ $driver->nomor_telepon }}" disabled>
                         </div>
                         <div class="form-group">
                             <label>Driver ID</label>

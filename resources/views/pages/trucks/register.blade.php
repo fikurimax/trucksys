@@ -27,16 +27,14 @@
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                        <label for="vehicle_pmku">Nomor PMKU*</label>
-                        <input type="text" class="form-control" name="nomor_pmku"
-                            value="{{ (isset($vehicle)) ? $vehicle['nomor_pmku'] : old('nomor_pmku', '') }}"
-                            id="vehicle_pmku" placeholder="C01234">
+                        <label for="vehicle_owner_name">Nama Pemilik*</label>
+                        <input type="text" class="form-control" name="nama_pemilik"
+                            value="{{ (isset($vehicle)) ? $vehicle['nama_pemilik'] : old('nama_pemilik', '') }}"
+                            id="vehicle_owner_name" placeholder="Nama lengkap pemilik kendaraan" autofocus>
                     </div>
                     <div class="form-group">
-                        <label for="vehicle_npwp">Nomor NPWP*</label>
-                        <input type="text" class="form-control" name="nomor_npwp"
-                            value="{{ (isset($vehicle)) ? $vehicle['nomor_npwp'] : old('nomor_npwp', '') }}"
-                            id="vehicle_npwp" placeholder="12345-678.90">
+                        <label for="vehicle_owner_address">Alamat Pemilik*</label>
+                        <textarea class="form-control" name="alamat_pemilik" id="vehicle_owner_address" cols="30" rows="5" placeholder="Alamat lengkap pemilik kendaraan">{{ (isset($vehicle)) ? $vehicle['alamat_pemilik'] : old('alamat_pemilik', '') }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="vehicle_plate_number">Nomor Polisi*</label>
@@ -46,27 +44,30 @@
                     </div>
                     <div class="form-group">
                         <label for="vehicle_brand">Merk*</label>
-                        <input type="text" class="form-control" name="merk"
-                            value="{{ (isset($vehicle)) ? $vehicle['merk'] : old('merk', '') }}" id="vehicle_brand"
-                            placeholder="HINO">
+                        <select class="form-control" name="merk" id="vehicle_brad">
+                            <option value="Volvo" @if(isset($vehicle) && $vehicle['merk'] == 'Volvo') selected @elseif (old('merk') == 'Volvo') selected @else selected @endif>Volvo</option>
+                            <option value="Hino" @if(isset($vehicle) && $vehicle['merk'] == 'Hino') selected @elseif (old('merk') == 'Hino') selected @endif>Hino</option>
+                            <option value="Mercedes" @if(isset($vehicle) && $vehicle['merk'] == 'Mercedes') selected @elseif (old('merk') == 'Mercedes') selected @endif>Mercedes</option>
+                            <option value="Mitsubishi" @if(isset($vehicle) && $vehicle['merk'] == 'Mitsubishi') selected @elseif (old('merk') == 'Mitsubishi') selected @endif>Mitsubishi</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="vehicle_model">Model*</label>
-                        <input type="text" class="form-control" name="model"
-                            value="{{ (isset($vehicle)) ? $vehicle['model'] : old('model', '') }}" id="vehicle_model"
-                            placeholder="Truk">
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicle_type">Tipe Kendaraan*</label>
-                        <input type="text" class="form-control" name="tipe_kendaraan"
-                            value="{{ (isset($vehicle)) ? $vehicle['tipe_kendaraan'] : old('tipe_kendaraan', '') }}"
-                            id="vehicle_type" placeholder="ST150">
+                        <select class="form-control" name="model" id="vehicle_year_made">
+                            <option value="Dump Truck" @if(old('model') == 'Dump Truck') selected @elseif(isset($vehicle) && $vehicle['model'] == 'Dump Truck') selected @else selected @endif>Dump Truck</option>
+                            <option value="Flet Bed" @if(old('model') == 'Flet Bed') selected @elseif(isset($vehicle) && $vehicle['model'] == 'Flet Bed') selected @endif>Flet Bed</option>
+                            <option value="Truk Kontainer 20 Feet" @if(old('model') == 'Truk Kontainer 20 Feet') selected @elseif(isset($vehicle) && $vehicle['model'] == 'Truk Kontainer 20 Feet') selected @endif>Truk Kontainer 20 Feet</option>
+                            <option value="Truk Kontainer 40 Feet" @if(old('model') == 'Truk Kontainer 40 Feet') selected @elseif(isset($vehicle) && $vehicle['model'] == 'Truk Kontainer 40 Feet') selected @endif>Truk Kontainer 40 Feet</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="vehicle_kind">Jenis Kendaraan*</label>
-                        <input type="text" class="form-control" name="jenis_kendaraan"
-                            value="{{ (isset($vehicle)) ? $vehicle['jenis_kendaraan'] : old('jenis_kendaraan', '') }}"
-                            id="vehicle_kind" placeholder="ST150">
+                        <select class="form-control" name="jenis_kendaraan" id="vehicle_kind">
+                            <option value="Cold Diesel Engkel" @if(isset($vehicle) && $vehicle['jenis_kendaraan'] == 'Cold Diesel Engkel') selected @elseif(old('jenis_kendaraan') == 'Cold Diesel Engkel') selected @else selected @endif>Cold Diesel Engkel</option>
+                            <option value="Cold Diesel Double" @if(isset($vehicle) && $vehicle['jenis_kendaraan'] == 'Cold Diesel Double') selected @elseif(old('jenis_kendaraan') == 'Cold Diesel Double') selected @endif>Cold Diesel Double</option>
+                            <option value="Fuso" @if(isset($vehicle) && $vehicle['jenis_kendaraan'] == 'Fuso') selected @elseif(old('jenis_kendaraan') == 'Fuso') selected @endif>Fuso</option>
+                            <option value="Tronton" @if(isset($vehicle) && $vehicle['jenis_kendaraan'] == 'Tronton') selected @elseif(old('jenis_kendaraan') == 'Tronton') selected @endif>Tronton</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="vehicle_cylinder">Isi Silinder*</label>
@@ -74,6 +75,8 @@
                             value="{{ (isset($vehicle)) ? $vehicle['isi_silinder'] : old('isi_silinder', '') }}"
                             id="vehicle_cylinder" placeholder="1493">
                     </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="vehicle_capacity">Kapasitas*</label>
                         <input type="text" class="form-control" name="kapasitas"
@@ -99,8 +102,6 @@
                             @endfor
                         </select>
                     </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="vehicle_license_number">Nomor STNK*</label>
                         <input type="text" class="form-control" name="nomor_stnk"

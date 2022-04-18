@@ -86,8 +86,23 @@ class DriverController extends Controller
     public function register(Request $request)
     {
         return view('pages.drivers.register', [
-            'last_id' => Driver::latest()->first()->id ?? 0
+            'last_id' => Driver::latest()->first()->id ?? 0,
+            'last_registration_number' => $this->getTheLatesRegistrationNumber()
         ]);
+    }
+
+    public function getTheLatesRegistrationNumber(bool $lock = false)
+    {
+        $latestData = Driver::query();
+        if ($lock) {
+            $latestData->sharedLock();
+        }
+        $latestData = $latestData->select('nomor_registrasi')->orderBy('id', 'desc')->first();
+        if ($latestData == null) {
+            return '1000';
+        }
+
+        return (int) $latestData->nomor_registrasi + 1;
     }
 
     public function update(Request $request)
@@ -112,6 +127,7 @@ class DriverController extends Controller
             'id'                    => 'numeric',
             'nomor_registrasi'      => 'required|numeric',
             'nama'                  => 'required|string',
+            'nomor_telepon'         => 'required|string',
             'alamat'                => 'required',
             'tanggal_lahir'         => 'required',
             'tempat_lahir'          => 'required',
@@ -120,6 +136,7 @@ class DriverController extends Controller
         ], [
             'nomor_registrasi.required' => 'Silakan isi kolom Nomor Registrasi',
             'nama.required'             => 'Silakan isi kolom Nama',
+            'nomor_telepon.required'    => 'Silakan isi kolom Nomor Telepon',
             'alamat.required'           => 'Silakan isi kolom Alamat',
             'tanggal_lahir.required'    => 'Silakan isi kolom Tanggal Lahir',
             'tempat_lahir.required'     => 'Silakan isi kolom Tempat Lahir',
@@ -130,7 +147,8 @@ class DriverController extends Controller
 
         $request->merge([
             'tanggal_lahir' => Carbon::parse(str_replace('/', '-', $request->post('tanggal_lahir')))->format('Y-m-d'),
-            'masa_berlaku_sim' => Carbon::parse(str_replace('/', '-', $request->post('masa_berlaku_sim')))->format('Y-m-d')
+            'masa_berlaku_sim' => Carbon::parse(str_replace('/', '-', $request->post('masa_berlaku_sim')))->format('Y-m-d'),
+            'nomor_registrasi' => $this->getTheLatesRegistrationNumber(true)
         ]);
 
         if ($request->has('profile')) {

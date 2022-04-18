@@ -42,7 +42,7 @@
                         <input type="text" class="form-control" id="vendor_email" value="{{ $account->email }}" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="vendor_phone">No. Telepon</label>
+                        <label for="vendor_phone">No. Telepon/Handphone</label>
                         <input type="text" class="form-control" id="vendor_phone" value="{{ $account->phone_number }}" disabled>
                     </div>
                     <div class="form-group">

@@ -110,18 +110,24 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="driver_name">Nama Lengkap</label>
+                        <label for="driver_name">Nama Pemilik/Direktur</label>
                         <input type="text" class="form-control" name="nama" id="driver_name"
                             value="{{ (isset($driver)) ? $driver->nama : old('nama') }}"
                             placeholder="Nama lengkap pengemudi" required>
                     </div>
+                    <div class="form-group">
+                        <label for="driver_phone">Nomor Telepon/Handphone Driver</label>
+                        <input type="text" class="form-control" name="nomor_telepon" id="driver_phone"
+                            value="{{ (isset($driver)) ? $driver->nomor_telepon : old('nomor_telepon') }}"
+                            placeholder="Nomor Telepon" required>
+                    </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                        <label for="registration_number">Nomor Registrasi</label>
+                        <label for="registration_number">Nomor Registrasi <small>(Digenerate otomatis)</small></label>
                         <input type="text" class="form-control" name="nomor_registrasi" id="registration_number"
-                            value="{{ (isset($driver)) ? $driver->nomor_registrasi : old('nomor_registrasi') }}"
-                            placeholder="Nomor Registrasi" required>
+                            value="{{ (isset($driver)) ? $driver->nomor_registrasi : $last_registration_number }}"
+                            placeholder="Nomor Registrasi" readonly required>
                     </div>
                     <div class="form-group">
                         <label for="driver_address">Alamat</label>

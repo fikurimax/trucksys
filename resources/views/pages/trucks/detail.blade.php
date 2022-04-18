@@ -60,19 +60,24 @@
         <div class="row">
             <div class="col-sm-12 col-md-6">
                 <div class="form-group">
-                    <label for="vehicle_pmku">Nomor PMKU*</label>
-                    <input type="string" class="form-control" name="nomor_pmku" value="{{ $vehicle->nomor_pmku }}"
-                        id="vehicle_pmku" placeholder="C01234" disabled readonly>
+                    <label for="vehicle_owner_name">Nama Pemilik*</label>
+                    <input type="string" class="form-control" name="nama_pemilik" value="{{ $vehicle->nama_pemilik }}"
+                        id="vehicle_owner_name" disabled readonly>
                 </div>
                 <div class="form-group">
-                    <label for="vehicle_npwp">Nomor NPWP*</label>
-                    <input type="string" class="form-control" name="nomor_npwp" value="{{ $vehicle->nomor_npwp }}"
-                        id="vehicle_npwp" placeholder="12345-678.90" disabled readonly>
+                    <label for="vehicle_owner_address">Alamat Pemilik*</label>
+                    <input type="string" class="form-control" name="alamat_pemilik" value="{{ $vehicle->alamat_pemilik }}"
+                        id="vehicle_owner_address" disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_plate_number">Nomor Polisi*</label>
                     <input type="string" class="form-control" name="nomor_polisi" value="{{ $vehicle->nomor_polisi }}"
                         id="vehicle_plate_number" placeholder="B 4212 TWM" disabled readonly>
+                </div>
+                <div class="form-group">
+                    <label for="vehicle_license">Nomor STNK*</label>
+                    <input type="string" class="form-control" name="nomor_stnk" value="{{ $vehicle->nomor_stnk }}"
+                        id="vehicle_license" placeholder="B 4212 TWM" disabled readonly>
                 </div>
                 <div class="form-group">
                     <label for="vehicle_kir_ttl">Masa Berlaku KIR*</label>
@@ -113,11 +118,6 @@
                     <label for="vehicle_model">Model*</label>
                     <input type="string" class="form-control" name="model" value="{{ $vehicle->model }}" disabled readonly
                         id="vehicle_model" placeholder="Truk">
-                </div>
-                <div class="form-group">
-                    <label for="vehicle_type">Tipe Kendaraan*</label>
-                    <input type="string" class="form-control" name="tipe_kendaraan"
-                        value="{{ $vehicle->tipe_kendaraan }}" disabled readonly id="vehicle_type" placeholder="ST150">
                 </div>
                 <div class="form-group">
                     <label for="vehicle_kind">Jenis Kendaraan*</label>

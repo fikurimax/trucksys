@@ -25,12 +25,11 @@ class RegisterTruckRequest extends FormRequest
     {
         return [
             'id' => 'numeric',
-            'nomor_pmku' => 'required',
-            'nomor_npwp' => 'required',
+            'nama_pemilik' => 'required',
+            'alamat_pemilik' => 'required',
             'nomor_polisi' => 'required',
             'merk' => 'required',
             'model' => 'required',
-            'tipe_kendaraan' => 'required',
             'jenis_kendaraan' => 'required',
             'isi_silinder' => 'required',
             'kapasitas' => 'required',
@@ -51,12 +50,11 @@ class RegisterTruckRequest extends FormRequest
     public function messages()
     {
         return [
-            'nomor_pmku.required' => 'Silakan Isi Nomor Pmku',
-            'nomor_npwp.required' => 'Silakan Isi Nomor Npwp',
+            'nama_pemilik.required' => 'Silakan Isi Nama Pemilik',
+            'alamat_pemilik.required' => 'Silakan Isi Alamat Pemilik',
             'nomor_polisi.required' => 'Silakan Isi Nomor Polisi',
             'merk.required' => 'Silakan Isi Merk',
             'model.required' => 'Silakan Isi Model',
-            'tipe_kendaraan.required' => 'Silakan Isi Tipe Kendaraan',
             'jenis_kendaraan.required' => 'Silakan Isi Jenis Kendaraan',
             'isi_silinder.required' => 'Silakan Isi Isi Silinder',
             'kapasitas.required' => 'Silakan Isi Kapasitas',
@@ -67,8 +65,6 @@ class RegisterTruckRequest extends FormRequest
             'nomor_kir.required' => 'Silakan Isi Nomor Kir',
             'masa_berlaku_kir.required' => 'Silakan Isi Masa Berlaku Kir',
 
-            'nomor_pmku.numeric' => 'Kolom Nomor Pmku harus berupa numerik',
-            'nomor_npwp.numeric' => 'Kolom Nomor Npwp harus berupa numerik',
             'tahun_pembuatan.numeric' => 'Kolom Tahun Pembuatan harus berupa numerik',
             'tahun_registrasi.numeric' => 'Kolom Tahun Registrasi harus berupa numerik',
         ];

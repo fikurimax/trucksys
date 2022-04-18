@@ -9,12 +9,11 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * @property string $nomor_pmku
- * @property string $nomor_npwp
+ * @property string $nama_pemilik
+ * @property string $alamat_pemilik
  * @property string $nomor_polisi
  * @property string $merk
  * @property string $model
- * @property string $tipe_kendaraan
  * @property string $jenis_kendaraan
  * @property string $isi_silinder
  * @property string $kapasitas
@@ -31,12 +30,11 @@ class Truck extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nomor_pmku',
-        'nomor_npwp',
+        'nama_pemilik',
+        'alamat_pemilik',
         'nomor_polisi',
         'merk',
         'model',
-        'tipe_kendaraan',
         'jenis_kendaraan',
         'isi_silinder',
         'kapasitas',

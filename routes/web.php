@@ -21,7 +21,9 @@ Route::group([
     'middleware' => 'auth',
 ], function () {
     Route::get('/', [HomeController::class, 'index'])->name('dashboard');
-    Route::get('/vendor/export-all', [HomeController::class, 'exportAll'])->name('vendor.exportAll');
+    Route::name('vendor.')->prefix('/vendor')->group(function () {
+        Route::get('/export-all', [HomeController::class, 'exportAll'])->name('exportAll');
+    });
 
     Route::name('driver.')->prefix('/driver')->group(function () {
         Route::get('/', [DriverController::class, 'index'])->name('index');

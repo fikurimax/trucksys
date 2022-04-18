@@ -2,7 +2,7 @@
 
 @section('content_header')
 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-    {{ __('Detail akun') }}
+    {{ __('Update akun') }}
 </h2>
 @endsection
 
@@ -32,7 +32,7 @@
                             <input type="text" class="form-control" name="email" id="vendor_email" value="{{ old('email', $account->email) }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="vendor_phone">No. Telepon</label>
+                            <label for="vendor_phone">No. Telepon/Handphone</label>
                             <input type="text" class="form-control" name="phone_number" id="vendor_phone" value="{{ old('phone_number', $account->phone_number) }}" required>
                         </div>
                         <div class="form-group">
@@ -72,6 +72,20 @@
                                         id="document_nib" accept="image/*" @if (!isset($account)) required @endif
                                         onchange="document.getElementById('document_nib_desc').removeAttribute('disabled'); previewName(this, 'document_nib_label')">
                                     <label class="custom-file-label" id="document_nib_label" for="document_nib">Pilih file</label>
+                                </div>
+                            </div>
+                            <small>Format file harus berupa gambar (.jpg, .jpeg, .png, .svg, dan .gif) <br> Maximal
+                                2Mb</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="document_legalitiy">Foto Lembar Pengesahan Urutan Pertama*</label>
+                            <div class="input-group">
+                                <input type="hidden" id="document_legalitiy_desc" name="descriptions[]" value="Lembar pengesahan urutan pertama" disabled>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="documents[]"
+                                        id="document_legalitiy" accept="image/*" @if (!isset($account)) required @endif
+                                        onchange="document.getElementById('document_legalitiy_desc').removeAttribute('disabled'); previewName(this, 'document_legalitiy_label')">
+                                    <label class="custom-file-label" id="document_legalitiy_label" for="document_legalitiy">Pilih file</label>
                                 </div>
                             </div>
                             <small>Format file harus berupa gambar (.jpg, .jpeg, .png, .svg, dan .gif) <br> Maximal

@@ -22,7 +22,7 @@
                                     No. Reg
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
-                                    Nama Lengkap
+                                    Nama Pemilik/Direktur
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
                                     ID Driver

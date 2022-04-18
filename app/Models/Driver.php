@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
  * @property int $id
  * @property string $nomor_registrasi
  * @property string $nama
+ * @property string $nomor_telepon
  * @property string $alamat
  * @property string $tanggal_lahir
  * @property string $tempat_lahir  
@@ -28,6 +29,7 @@ class Driver extends Model
     protected $fillable = [
         'nomor_registrasi',
         'nama',
+        'nomor_telepon',
         'alamat',
         'tanggal_lahir',
         'tempat_lahir',

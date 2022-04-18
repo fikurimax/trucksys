@@ -34,10 +34,10 @@ class TruckController extends Controller
         $trucks = Truck::where('id_vendor', Auth::id())->orderBy('id', 'desc')->get();
         $filename = "data-truk-" . $username . "-" . date('d-m-Y') . ".csv";
         $handle = fopen($filename, 'w+');
-        fputcsv($handle, array('Nomor PMKU', 'Nomor NPWP', 'Nomor Polisi', 'Merk', 'Model', 'Tipe Kendaraan', 'Jenis Kendaraan', 'Isi Silinder', 'Kapasitas', 'Tahun Pembuatan', 'Nomor STNK', 'Masa Berlaku STNK', 'Masa Berlaku Pajak Kendaraan', 'Nomor KIR', 'Masa Berlaku KIR', 'Vendor'));
+        fputcsv($handle, array('Nama Pemilik', 'Alamat Pemilik', 'Nomor Polisi', 'Merk', 'Model', 'Jenis Kendaraan', 'Isi Silinder', 'Kapasitas', 'Tahun Pembuatan', 'Nomor STNK', 'Masa Berlaku STNK', 'Masa Berlaku Pajak Kendaraan', 'Nomor KIR', 'Masa Berlaku KIR', 'Vendor'));
 
         foreach ($trucks as $truck) {
-            fputcsv($handle, array($truck['nomor_pmku'], $truck['nomor_npwp'], $truck['nomor_polisi'], $truck['merk'], $truck['model'], $truck['tipe_kendaraan'], $truck['jenis_kendaraan'], $truck['isi_silinder'], $truck['kapasitas'], $truck['tahun_pembuatan'], $truck['nomor_stnk'], $truck['masa_berlaku_stnk'], $truck['masa_berlaku_pajak_kendaraan'], $truck['nomor_kir'], $truck['masa_berlaku_kir'], $truck['vendor']['name']));
+            fputcsv($handle, array($truck['nama_pemilik'], $truck['alamat_pemilik'], $truck['nomor_polisi'], $truck['merk'], $truck['model'], $truck['jenis_kendaraan'], $truck['isi_silinder'], $truck['kapasitas'], $truck['tahun_pembuatan'], $truck['nomor_stnk'], $truck['masa_berlaku_stnk'], $truck['masa_berlaku_pajak_kendaraan'], $truck['nomor_kir'], $truck['masa_berlaku_kir'], $truck['vendor']['name']));
         }
 
         fclose($handle);
@@ -221,7 +221,11 @@ class TruckController extends Controller
                 );
         }
 
-        return redirect()->route('vehicle.index', ['vid' => $request->post('id_vendor')]);
+        if ($request->filled('id')) {
+            return redirect()->route('vehicle.detail', ['id' => $request->post('id')]);
+        } else {
+            return redirect()->route('vehicle.index', ['vid' => $request->post('id_vendor')]);
+        }
     }
 
     public function delete(Request $request)
