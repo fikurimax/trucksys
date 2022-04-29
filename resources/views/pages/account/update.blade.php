@@ -36,7 +36,7 @@
                             <input type="text" class="form-control" name="phone_number" id="vendor_phone" value="{{ old('phone_number', $account->phone_number) }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="vendor_owner">Nama Pemilik</label>
+                            <label for="vendor_owner">Nama Pemilik/Direktur</label>
                             <input type="text" class="form-control" name="owner_name" id="vendor_owner" value="{{ old('owner_name', $account->owner_name) }}" autofocus required>
                         </div>
                         <div class="form-group">
@@ -78,9 +78,9 @@
                                 2Mb</small>
                         </div>
                         <div class="form-group">
-                            <label for="document_legalitiy">Foto Lembar Pengesahan Urutan Pertama*</label>
+                            <label for="document_legalitiy">Foto Lembar Pengesahan Akte Perusahaan*</label>
                             <div class="input-group">
-                                <input type="hidden" id="document_legalitiy_desc" name="descriptions[]" value="Lembar pengesahan urutan pertama" disabled>
+                                <input type="hidden" id="document_legalitiy_desc" name="descriptions[]" value="Lembar Pengesahan Akte Perusahaan" disabled>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" name="documents[]"
                                         id="document_legalitiy" accept="image/*" @if (!isset($account)) required @endif

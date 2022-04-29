@@ -41,7 +41,7 @@
                             </h4>
                         </div>
                         <div class="form-group">
-                            <label>Nama Pemilik/Direktur</label>
+                            <label>Nama Driver/Kondektur</label>
                             <input class="form-control" value="{{ $driver->nama }}" disabled>
                         </div>
                         <div class="form-group">

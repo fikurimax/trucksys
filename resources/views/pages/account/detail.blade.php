@@ -46,7 +46,7 @@
                         <input type="text" class="form-control" id="vendor_phone" value="{{ $account->phone_number }}" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="vendor_owner">Nama Pemilik</label>
+                        <label for="vendor_owner">Nama Pemilik/Direktur</label>
                         <input type="text" class="form-control" id="vendor_owner" value="{{ $account->owner_name }}" disabled>
                     </div>
                     <div class="form-group">
