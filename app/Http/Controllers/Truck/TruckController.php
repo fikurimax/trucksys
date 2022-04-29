@@ -2,28 +2,32 @@
 
 namespace App\Http\Controllers\Truck;
 
-use App\Exports\TruckExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterTruckRequest;
-use App\Jobs\DeleteCsvFileAfterDownload;
 use App\Models\Truck;
 use App\Models\TruckPhotos;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Excel;
 
 class TruckController extends Controller
 {
     public function index(Request $request)
     {
+        $vehicles = Truck::query();
+
+        if (!Gate::allows('superadmin')) {
+            $vehicles->where('id_vendor', Auth::id());
+        }
+
         return view('pages.trucks.index', [
             'vendor'    => Auth::user(),
-            'vehicles'  => Truck::where('id_vendor', Auth::id())->orderBy('id', 'desc')->get()
+            'vehicles'  => $vehicles->orderBy('id', 'desc')->get()
         ]);
     }
 
@@ -31,7 +35,13 @@ class TruckController extends Controller
     {
         $username = auth()->user()->name;
 
-        $trucks = Truck::where('id_vendor', Auth::id())->orderBy('id', 'desc')->get();
+        $vehicles = Truck::query();
+        if (!Gate::allows('superadmin')) {
+            $vehicles->where('id_vendor', Auth::id());
+        }
+
+        $trucks = $vehicles->orderBy('id', 'desc')->get();
+
         $filename = "data-truk-" . $username . "-" . date('d-m-Y') . ".csv";
         $handle = fopen($filename, 'w+');
         fputcsv($handle, array('Nama Pemilik', 'Alamat Pemilik', 'Nomor Polisi', 'Merk', 'Model', 'Jenis Kendaraan', 'Isi Silinder', 'Kapasitas', 'Tahun Pembuatan', 'Nomor STNK', 'Masa Berlaku STNK', 'Masa Berlaku Pajak Kendaraan', 'Nomor KIR', 'Masa Berlaku KIR', 'Vendor'));

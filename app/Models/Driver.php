@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
  * @property string $photo  
  * @property string $photo_ktp  
  * @property string $photo_sim  
+ * @property int $vendor_id
  */
 class Driver extends Model
 {
@@ -40,12 +41,18 @@ class Driver extends Model
         'photo',
         'photo_ktp',
         'photo_sim',
+        'vendor_id'
     ];
 
     // Relations
     public function truck()
     {
         return $this->hasOne(Truck::class, 'id_driver');
+    }
+
+    public function vendor()
+    {
+        return $this->belongsTo(User::class, 'vendor_id');
     }
 
     /**

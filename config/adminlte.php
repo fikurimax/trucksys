@@ -308,7 +308,13 @@ return [
         [
             'text'        => 'Akun',
             'url'         => 'account/detail',
-            'icon'        => 'fas fa-building',
+            'icon'        => 'fas fa-user',
+        ],
+        [
+            'text'        => 'Data Pengguna',
+            'url'         => 'account/all',
+            'icon'        => 'fas fa-users',
+            'can'         => 'superadmin'
         ],
     ],
 

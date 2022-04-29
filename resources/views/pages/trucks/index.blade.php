@@ -34,6 +34,11 @@
                                 <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
                                     KIR
                                 </th>
+                                @if (\Auth::user()->is_super_admin)
+                                    <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
+                                        Vendor
+                                    </th>
+                                @endif  
                                 <th class="sorting" tabindex="0" aria-controls="dashboard-rows" rowspan="1" colspan="1">
                                     Foto Unit
                                 </th>
@@ -51,6 +56,9 @@
                                     <td>{{ $vehicles[$i]->tahun_pembuatan }}</td>
                                     <td>{{ $vehicles[$i]->nomor_stnk }}</td>
                                     <td>{{ $vehicles[$i]->nomor_kir }}</td>
+                                    @if (\Auth::user()->is_super_admin)
+                                        <td>{{ $vehicles[$i]->vendor->name }}</td>
+                                    @endif
                                     <td class="text-center">
                                         <a href="{{ asset('storage/trucks/' . $vehicles[$i]->photos[0]->filename) }}" 
                                             data-lightbox="{{ $vehicles[$i]->photos[0]->filename }}" 

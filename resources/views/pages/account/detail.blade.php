@@ -79,7 +79,11 @@
             <div class="row">
                 <div class="col-md-10 col-12"></div>
                 <div class="col-md-2 col-12">
-                    <a href="{{ route('account.edit') }}" class="btn btn-info">Edit</a>
+                    @if (request()->has('id'))
+                        <a href="{{ route('account.edit', ['id' => request()->id]) }}" class="btn btn-info">Edit</a>
+                    @else
+                        <a href="{{ route('account.edit') }}" class="btn btn-info">Edit</a>
+                    @endif
                 </div>
             </div>
         </div>

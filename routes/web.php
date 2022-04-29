@@ -47,6 +47,8 @@ Route::group([
     });
 
     Route::name('account.')->prefix('/account')->group(function () {
+        Route::get('/all', [AccountController::class, 'ViewAllAccounts'])->name('all');
+        Route::get('/all/export', [AccountController::class, 'ExportAllAccounts'])->name('all.export');
         Route::get('/detail', [AccountController::class, 'detail'])->name('detail');
         Route::get('/edit', [AccountController::class, 'edit'])->name('edit');
         Route::post('/save', [AccountController::class, 'save'])->name('save');
