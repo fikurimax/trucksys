@@ -110,10 +110,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="driver_name">Nama Pemilik/Direktur</label>
+                        <label for="driver_name">Nama Driver/Kondektur</label>
                         <input type="text" class="form-control" name="nama" id="driver_name"
                             value="{{ (isset($driver)) ? $driver->nama : old('nama') }}"
-                            placeholder="Nama lengkap pengemudi" required>
+                            placeholder="Nama lengkap driver/kondektur" required>
                     </div>
                     <div class="form-group">
                         <label for="driver_phone">Nomor Telepon/Handphone Driver</label>
